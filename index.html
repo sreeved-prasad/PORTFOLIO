@@ -1,994 +1,3325 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Sreeved Prasad — AI & Data Science</title>
-<style>
-:root{
-  --nv:#0a0e1a;--s:rgba(255,255,255,.04);--b:rgba(255,255,255,.09);--b2:rgba(255,255,255,.16);
-  --tx:#e8e4d9;--t2:#a09b8c;--t3:#6b6558;
-  --g:#c9a84c;--g2:#e8c97a;--tl:#4ab8c1;
-  --sf:'Georgia','Times New Roman',Times,serif;--ss:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;--mn:'Courier New',Courier,monospace;
-  --e:cubic-bezier(.4,0,.2,1);--sp:cubic-bezier(.34,1.56,.64,1);--dur:640ms;
-  --gap:clamp(1.5rem,5vw,4rem);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px}
-body{font-family:var(--ss);background:var(--nv);color:var(--tx);-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh;width:100vw}
-.sr{display:none}
-.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 15% 20%,rgba(201,168,76,.07) 0%,transparent 60%),radial-gradient(ellipse 50% 70% at 85% 75%,rgba(74,184,193,.05) 0%,transparent 60%),var(--nv)}
-.bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:72px 72px}
-.orb{position:absolute;border-radius:50%;filter:blur(100px);animation:orbD 30s ease-in-out infinite}
-.o1{width:500px;height:500px;background:rgba(201,168,76,.06);top:-150px;left:-150px}
-.o2{width:400px;height:400px;background:rgba(74,184,193,.05);bottom:-100px;right:-100px;animation-delay:-10s;animation-duration:25s}
-#slide-0{position:relative}
-.hn-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.hn-bg::after{content:'';position:absolute;inset:0;z-index:5;background:radial-gradient(ellipse 80% 70% at 40% 50%,rgba(10,14,26,.50) 0%,rgba(10,14,26,.80) 100%)}
-.hero-grid{position:relative;z-index:2}
-.hn{position:absolute;border-radius:50%;background:var(--g);animation:hnP var(--d,5s) ease-in-out infinite;animation-delay:var(--dl,0s);opacity:0}
-.hn.t{background:var(--tl)}
-.hl{position:absolute;height:1px;transform-origin:left center;animation:hlF var(--ld,8s) ease-in-out infinite;animation-delay:var(--ldl,0s)}
-.hn-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.18),transparent);animation:hnS 14s linear infinite}
-.hn-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(74,184,193,.015) 1px,transparent 1px);background-size:90px 90px;animation:hnG 30s linear infinite}
-/* Aurora blobs */
-.aur{position:absolute;border-radius:50%;filter:blur(90px);animation:auroraF var(--ad,20s) ease-in-out infinite;animation-delay:var(--adl,0s);opacity:0}
-/* Drifting particles */
-.pf{position:absolute;inset:0;overflow:hidden}
-.pt_{position:absolute;border-radius:50%;animation:ptD var(--pd,22s) linear infinite;animation-delay:var(--pdl,0s);opacity:0}
-/* Pulse rings */
-.rng{position:absolute;border-radius:50%;border:1px solid;animation:rngE var(--rd,8s) ease-out infinite;animation-delay:var(--rdl,0s);opacity:0;transform:scale(0)}
-/* Beam sweeps */
-.bm{position:absolute;width:1px;height:100%;top:0;animation:bmS var(--bd,15s) ease-in-out infinite;animation-delay:var(--bdl,0s);opacity:0}
-/* Hex grid */
-.hxg{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpath d='M30 4L4 19v30l26 15 26-15V19z' fill='none' stroke='%23c9a84c' stroke-width='0.4' opacity='0.5'/%3E%3Cpath d='M30 56L4 71v30l26 15 26-15V71z' fill='none' stroke='%234ab8c1' stroke-width='0.4' opacity='0.4'/%3E%3C/svg%3E");background-size:60px 104px;opacity:.025;animation:hxS 45s linear infinite}
-/* Wave bar */
-.wvb{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.4) 30%,rgba(74,184,193,.35) 60%,transparent 100%);animation:wvP 5s ease-in-out infinite}
-/* Constellation lines */
-.cln{position:absolute;height:1px;transform-origin:left center;animation:clnP var(--cld,10s) ease-in-out infinite;animation-delay:var(--clda,0s);opacity:0}
-nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:.9rem var(--gap);display:flex;align-items:center;justify-content:space-between;background:rgba(10,14,26,.82);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
-.nb{font-family:var(--sf);font-size:1.1rem;font-weight:700;color:var(--tx);display:flex;align-items:center;gap:.5rem}
-.nb::before{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:nd 2s ease-in-out infinite}
-.nl{display:flex;gap:.1rem;list-style:none}
-.nl label{font-family:var(--mn);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);padding:.4rem .75rem;border-radius:4px;cursor:pointer;transition:color .25s,background .25s;border:1px solid transparent}
-.nl label:hover{color:var(--tx);background:var(--s)}
-#s0:checked~nav .nl label[for=s0],#s1:checked~nav .nl label[for=s1],#s2:checked~nav .nl label[for=s2],#s3:checked~nav .nl label[for=s3],#s4:checked~nav .nl label[for=s4],#s5:checked~nav .nl label[for=s5],#s6:checked~nav .nl label[for=s6]{color:var(--nv);background:var(--g);border-color:var(--g)}
-.blbl{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.blbl span{display:block;width:22px;height:1.5px;background:var(--tx);border-radius:2px;transition:.35s}
-.mob{position:fixed;inset:0;z-index:290;background:rgba(10,14,26,.97);backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .4s var(--e)}
-#mob:checked~.mob{opacity:1;pointer-events:all}
-#mob:checked~nav .blbl span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-#mob:checked~nav .blbl span:nth-child(2){opacity:0}
-#mob:checked~nav .blbl span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mob label{font-family:var(--sf);font-size:2rem;font-weight:700;color:var(--tx);cursor:pointer;transition:color .25s}
-.mob label:hover{color:var(--g)}
-.dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:.6rem}
-.dots label{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;display:block;transition:background .3s,height .3s var(--sp),border-radius .3s}
-#s0:checked~.dots label[for=s0],#s1:checked~.dots label[for=s1],#s2:checked~.dots label[for=s2],#s3:checked~.dots label[for=s3],#s4:checked~.dots label[for=s4],#s5:checked~.dots label[for=s5],#s6:checked~.dots label[for=s6]{background:var(--g);height:22px;border-radius:3px;box-shadow:0 0 10px rgba(201,168,76,.18)}
-.vp{position:fixed;inset:0;z-index:1;overflow:hidden}
-.tr{display:flex;width:700%;height:100%;transition:transform var(--dur) var(--e)}
-#s0:checked~.vp .tr{transform:translateX(0)}
-#s1:checked~.vp .tr{transform:translateX(calc(-100vw))}
-#s2:checked~.vp .tr{transform:translateX(calc(-200vw))}
-#s3:checked~.vp .tr{transform:translateX(calc(-300vw))}
-#s4:checked~.vp .tr{transform:translateX(calc(-400vw))}
-#s5:checked~.vp .tr{transform:translateX(calc(-500vw))}
-#s6:checked~.vp .tr{transform:translateX(calc(-600vw))}
-.slide{width:100vw;height:100%;flex-shrink:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
-.si{min-height:100%;padding:5.5rem var(--gap) 5rem;display:flex;flex-direction:column;justify-content:center}
-.ey{font-family:var(--mn);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--g);margin-bottom:.8rem;display:flex;align-items:center;gap:.75rem}
-.ey::before{content:'';width:28px;height:1px;background:var(--g)}
-.st{font-family:var(--sf);font-weight:900;font-size:clamp(1.9rem,4.5vw,3.4rem);line-height:1.06;letter-spacing:-.03em;margin-bottom:1.25rem}
-.st em{font-style:italic;color:var(--g)}
-.bt{font-size:1rem;color:var(--t2);line-height:1.85;max-width:54ch;margin-bottom:1rem;font-weight:300}
-.card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.5rem;transition:border-color .35s,transform .4s var(--sp),box-shadow .4s;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);opacity:0;transition:opacity .35s}
-.card:hover{border-color:var(--b2);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.card:hover::before{opacity:.6}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.85rem;border-radius:6px;font-family:var(--ss);font-size:.875rem;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .3s var(--sp),box-shadow .3s;letter-spacing:.03em}
-.bg-{background:linear-gradient(135deg,var(--g),var(--g2));color:var(--nv);border:none}
-.bg-:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,168,76,.4)}
-.bo-{background:transparent;border:1px solid var(--b2);color:var(--tx)}
-.bo-:hover{border-color:var(--g);color:var(--g);transform:translateY(-3px)}
-.pg{font-family:var(--mn);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .65rem;border-radius:4px;border:1px solid var(--b)}
-.pg-g{background:rgba(201,168,76,.12);color:var(--g);border:1px solid rgba(201,168,76,.25)}
-.pg-t{background:rgba(74,184,193,.1);color:var(--tl);border:1px solid rgba(74,184,193,.2)}
-.tg{font-family:var(--mn);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .65rem;border-radius:4px;border:1px solid var(--b);color:var(--t2);display:inline-block;cursor:default;transition:border-color .25s,color .25s,transform .3s var(--sp)}
-.tg:hover{border-color:var(--g);color:var(--g);transform:translateY(-2px)}
-.dv{width:48px;height:2px;background:linear-gradient(90deg,var(--g),var(--tl));border-radius:2px;margin:1.25rem 0}
-.tl{position:relative;padding-left:2rem}
-.tl::before{content:'';position:absolute;left:5px;top:.5rem;bottom:0;width:1px;background:linear-gradient(to bottom,var(--g),transparent)}
-.ti{position:relative;margin-bottom:2rem}
-.ti::before{content:'';position:absolute;left:-1.74rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 0 3px rgba(201,168,76,.2),0 0 12px rgba(201,168,76,.18)}
-.ty{font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;color:var(--g);margin-bottom:.25rem}
-.tt{font-family:var(--sf);font-size:1.05rem;font-weight:700;margin-bottom:.2rem}
-.to{font-size:.875rem;color:var(--t2);font-weight:300}
-.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
-.fg>label{font-family:var(--mn);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
-.fg input,.fg textarea{background:var(--s);border:1px solid var(--b);border-radius:6px;padding:.75rem 1rem;color:var(--tx);font-family:var(--ss);font-size:.9rem;outline:none;resize:vertical;transition:border-color .25s,box-shadow .25s}
-.fg input:focus,.fg textarea:focus{border-color:var(--g);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--t3)}
-.sl{font-family:var(--mn);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);position:relative;padding-bottom:2px;transition:color .25s;text-decoration:none}
-.sl::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--g);transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.sl:hover{color:var(--g)}.sl:hover::after{transform:scaleX(1)}
-.cc{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color .35s,transform .4s var(--sp)}
-.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--tl))}
-.cc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-5px)}
-.hw{position:relative;min-height:100%;display:flex;flex-direction:column;justify-content:center}
-.ho{font-family:var(--mn);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;animation:fU .8s .15s var(--e) both}
-.ho::before{content:'';width:32px;height:1px;background:var(--g)}
-.hn-{font-family:var(--sf);font-weight:900;font-size:clamp(3.2rem,10vw,7.5rem);line-height:.92;letter-spacing:-.04em;margin-bottom:1rem}
-.rw{display:block;overflow:hidden}.rw span{display:block}
-.rw:nth-child(1) span{animation:sU .95s .2s var(--e) both}
-.rw:nth-child(2) span{animation:sU .95s .34s var(--e) both}
-.rw:nth-child(3) span{animation:sU .95s .48s var(--e) both;background:linear-gradient(135deg,var(--g),var(--g2),var(--tl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hr-{font-family:var(--sf);font-style:italic;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--t2);margin-bottom:1.75rem;font-weight:400;animation:fU .8s .6s var(--e) both}
-.hd{font-size:clamp(.9rem,1.8vw,1.05rem);color:var(--t2);max-width:50ch;line-height:1.85;margin-bottom:2.5rem;font-weight:300;animation:fU .8s .72s var(--e) both}
-.ha{display:flex;gap:1rem;flex-wrap:wrap;animation:fU .8s .84s var(--e) both}
-.hsc{margin-top:4rem;display:flex;align-items:center;gap:1rem;font-family:var(--mn);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--t3);animation:fU .8s 1s var(--e) both}
-.hst{width:40px;height:1px;background:var(--b2);position:relative;overflow:hidden}
-.hst::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--g);animation:scA 2s ease-in-out infinite}
-.hg{display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center;max-width:1300px;margin:0 auto;width:100%}
-.hs{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.sc{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color .35s,transform .4s var(--sp),box-shadow .4s;animation:fU .8s var(--e) both}
-.sc:nth-child(1){animation-delay:.9s}.sc:nth-child(2){animation-delay:1s}.sc:nth-child(3){animation-delay:1.1s}.sc:nth-child(4){animation-delay:1.2s}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--tl));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--e)}
-.sc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
-.sc:hover::before{transform:scaleX(1)}
-.sn{font-family:var(--sf);font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--g),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block;margin-bottom:.25rem}
-.sl-{font-family:var(--mn);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
-.ag{display:grid;grid-template-columns:340px 1fr;gap:4rem;align-items:center}
-.af{width:100%;aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(74,184,193,.06));border:1px solid var(--b);display:flex;align-items:center;justify-content:center;position:relative}
-.mn-{font-family:var(--sf);font-size:7rem;font-weight:900;background:linear-gradient(135deg,var(--g),var(--g2),var(--tl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.35;user-select:none;letter-spacing:-.05em;animation:mP 4s ease-in-out infinite}
-.dp{position:absolute;display:flex;flex-direction:column;align-items:center;left:18px}
-.dpair{display:flex;align-items:center;gap:28px;margin-bottom:14px}
-.dd{width:10px;height:10px;border-radius:50%;animation:dP 2s ease-in-out infinite}
-.dd.g{background:var(--g);box-shadow:0 0 8px rgba(201,168,76,.6)}
-.dd.t{background:var(--tl);box-shadow:0 0 8px rgba(74,184,193,.5)}
-.ab{position:absolute;background:rgba(10,14,26,.92);border:1px solid var(--b);border-radius:10px;padding:.85rem 1.2rem;backdrop-filter:blur(12px)}
-.ab1{bottom:-1.25rem;right:-1.25rem}.ab2{top:-1.25rem;left:-1.25rem}
-.bn{font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1;display:block}
-.bl{font-family:var(--mn);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);display:block;margin-top:.2rem}
-.pjg{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.5rem}
-.pjc{background:var(--s);border:1px solid var(--b);border-radius:12px;overflow:hidden;transition:transform .4s var(--sp),border-color .35s,box-shadow .4s;position:relative}
-.pjc:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.3);box-shadow:0 24px 64px rgba(0,0,0,.5)}
-.pjc.ft{grid-column:span 2;display:grid;grid-template-columns:1.25fr 1fr}
-.pv{position:relative;overflow:hidden;min-height:180px;display:flex;align-items:center;justify-content:center}
-.pjc.ft .pv{min-height:unset}
-.ga{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:24px 24px}
-.ov{position:absolute;inset:0;background:rgba(10,14,26,.78);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;gap:.75rem;opacity:0;transition:opacity .3s}
-.pjc:hover .ov{opacity:1}
-.ol{font-family:var(--mn);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.45rem 1rem;border-radius:4px;border:1px solid rgba(255,255,255,.25);color:var(--tx);transition:background .2s,border-color .2s,color .2s;text-decoration:none}
-.ol:hover{background:var(--g);border-color:var(--g);color:var(--nv)}
-.pb{padding:1.35rem}
-.pt{font-family:var(--mn);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:.4rem}
-.pn{font-family:var(--sf);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
-.pd-{font-size:.82rem;color:var(--t2);line-height:1.7;margin-bottom:.9rem;font-weight:300}
-.ptech{display:flex;flex-wrap:wrap;gap:.35rem}
-.ab-{width:44px;height:8px;background:rgba(201,168,76,.3);border:1px solid var(--g);border-radius:4px;position:absolute;bottom:28%;left:50%;transform:translateX(-50%)}
-.as1{width:7px;height:62px;border:1px solid rgba(201,168,76,.55);border-radius:4px;position:absolute;bottom:calc(28% + 8px);left:50%;transform:translateX(-50%);transform-origin:bottom center;animation:aS1 3.5s ease-in-out infinite}
-.as2{width:7px;height:48px;border:1px solid rgba(74,184,193,.55);border-radius:4px;position:absolute;bottom:calc(28% + 70px);left:50%;transform:translateX(-50%) rotate(-18deg);transform-origin:bottom center;animation:aS2 3.5s ease-in-out infinite}
-.at{width:12px;height:12px;border-radius:50%;background:var(--g);box-shadow:0 0 16px rgba(201,168,76,.7);position:absolute;bottom:calc(28% + 118px);left:50%;transform:translateX(-50%);animation:aT 3.5s ease-in-out infinite}
-.ao{width:52px;height:52px;border:1px solid rgba(201,168,76,.18);border-radius:50%;position:absolute;bottom:calc(28% + 86px);left:50%;transform:translateX(-50%);animation:spin 5s linear infinite}
-.cr{width:68px;height:8px;border:2px solid var(--g);border-radius:50%;position:absolute;left:-6px;box-shadow:0 0 10px rgba(201,168,76,.35);animation:rG 2s ease-in-out infinite}
-.cr1{top:16px;animation-delay:0s}.cr2{top:45px;animation-delay:.66s}.cr3{top:74px;animation-delay:1.32s}
-.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
-.skg-{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.5rem;transition:border-color .35s,transform .4s var(--sp);position:relative;overflow:hidden}
-.skg-::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--tl));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--e)}
-.skg-:hover{border-color:rgba(201,168,76,.25);transform:translateY(-5px)}
-.skg-:hover::after{transform:scaleX(1)}
-.si-{font-size:1.6rem;margin-bottom:1rem;display:block;animation:iB 3s ease-in-out infinite}
-.st-{font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.6rem}
-.ss-{font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:1rem}
-.skl{list-style:none;display:flex;flex-direction:column;gap:.45rem}
-.skl li{font-size:.875rem;color:var(--t2);font-weight:300;display:flex;align-items:center;gap:.5rem}
-.skl li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--g);flex-shrink:0}
-.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:1.5rem}
-.lb{margin-top:1.25rem;background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;cursor:pointer;transition:border-color .35s}
-.lb:hover{border-color:rgba(201,168,76,.25)}
-.bn-{font-family:var(--mn);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,var(--g),var(--g2));color:var(--nv);padding:.32rem .9rem;border-radius:4px;white-space:nowrap;flex-shrink:0}
-.er{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem}
-.ac{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1rem 1.25rem;display:flex;gap:.9rem;align-items:center;transition:border-color .35s,transform .3s}
-.ac:hover{border-color:rgba(201,168,76,.2);transform:translateY(-3px)}
-.eg{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.str{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;text-align:center}
-.tc{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:1rem;transition:border-color .35s,transform .4s var(--sp)}
-.tc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px)}
-.cgg{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.fw{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:2rem}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.sr-{display:flex;flex-direction:column}
-.si-c{display:flex;align-items:center;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--b)}
-.si-c:last-child{border-bottom:none}
-.sic{width:36px;height:36px;border-radius:8px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-.rb{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(74,184,193,.06));border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.5rem;transition:border-color .35s,box-shadow .35s}
-.rb:hover{border-color:rgba(201,168,76,.4);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-.lbt{display:none}
-.lbo{position:fixed;inset:0;z-index:1000;background:rgba(5,8,18,.96);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s var(--e);padding:2rem}
-.lbt:checked~.lbo{opacity:1;pointer-events:all}
-.lbb{position:relative;max-width:900px;width:100%;max-height:90vh;border-radius:12px;overflow:hidden;border:1px solid var(--b2);box-shadow:0 32px 80px rgba(0,0,0,.7);display:flex;flex-direction:column;background:rgba(10,14,26,.95)}
-.lbh{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;background:rgba(255,255,255,.04);border-bottom:1px solid var(--b);flex-shrink:0}
-.lbtt{font-family:var(--mn);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g)}
-.lbc-{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center}
-.lbc- img{max-width:100%;max-height:calc(90vh - 110px);object-fit:contain;display:block}
-.lbc- object{width:100%;height:calc(90vh - 110px);border:none}
-.lba{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.25rem;background:rgba(255,255,255,.03);border-top:1px solid var(--b);flex-shrink:0;flex-wrap:wrap}
-.lba a,.lba label{font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border-radius:4px;text-decoration:none;transition:background .25s,transform .3s var(--sp),box-shadow .3s;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
-.lba-g{background:linear-gradient(135deg,var(--g),var(--g2));color:var(--nv);font-weight:600}
-.lba-g:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
-.lba-o{border:1px solid var(--b2);color:var(--t2)}
-.lba-o:hover{border-color:var(--g);color:var(--g);transform:translateY(-2px)}
-.ct{cursor:pointer;display:block;transition:transform .4s var(--sp),border-color .35s}
-.ct:hover{transform:translateY(-5px)}
-footer{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(10,14,26,.85);backdrop-filter:blur(16px);border-top:1px solid var(--b);padding:.65rem var(--gap);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.fl{font-family:var(--sf);font-size:.9rem;font-weight:700;color:var(--tx)}.fl span{color:var(--g)}
-.fn{display:flex;gap:1.5rem}.fn label{font-family:var(--mn);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);cursor:pointer;transition:color .25s}.fn label:hover{color:var(--g)}
-.fc{font-family:var(--mn);font-size:.56rem;color:var(--t3);letter-spacing:.06em}
-a.clink{color:var(--tx);text-decoration:none;font-family:var(--mn);font-size:.78rem;transition:color .25s}
-a.clink:hover{color:var(--g)}
-/* ===== KEYFRAMES ===== */
-@keyframes orbD{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-30px)}66%{transform:translate(-30px,40px)}}
-@keyframes nd{0%,100%{box-shadow:0 0 4px var(--g)}50%{box-shadow:0 0 14px var(--g)}}
-@keyframes fU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes sU{from{transform:translateY(110%)}to{transform:none}}
-@keyframes scA{0%{left:-100%}100%{left:100%}}
-@keyframes mP{0%,100%{opacity:.25}50%{opacity:.45}}
-@keyframes dP{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-@keyframes hnP{0%,100%{opacity:0;transform:scale(.7)}40%,60%{opacity:.45;transform:scale(1)}}
-@keyframes hlF{0%,100%{opacity:0;transform:scaleX(0)}20%,80%{opacity:.2;transform:scaleX(1)}}
-@keyframes hnS{0%{top:0%;opacity:0}4%{opacity:1}96%{opacity:.5}100%{top:100%;opacity:0}}
-@keyframes hnG{from{background-position:0 0,0 0}to{background-position:90px 90px,90px 90px}}
-@keyframes aS1{0%,100%{transform:translateX(-50%) rotate(-14deg)}50%{transform:translateX(-50%) rotate(14deg)}}
-@keyframes aS2{0%,100%{transform:translateX(-50%) rotate(-28deg)}50%{transform:translateX(-50%) rotate(8deg)}}
-@keyframes aT{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
-@keyframes rG{0%,100%{opacity:.45;box-shadow:0 0 4px rgba(201,168,76,.2)}50%{opacity:1;box-shadow:0 0 16px rgba(201,168,76,.7)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes iB{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes glG{0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,.1)}50%{box-shadow:0 0 0 6px rgba(74,222,128,.05)}}
-/* New animation keyframes */
-@keyframes auroraF{0%,100%{opacity:0;transform:translate(0,0) scale(1)}15%{opacity:1}50%{transform:translate(var(--ax,35px),var(--ay,-20px)) scale(1.18)}85%{opacity:.6}}
-@keyframes ptD{0%{opacity:0;transform:translateY(105vh) scale(.5)}8%{opacity:.8}88%{opacity:.5}100%{opacity:0;transform:translateY(-5vh) scale(1)}}
-@keyframes rngE{0%{opacity:.55;transform:scale(0)}65%{opacity:.12}100%{opacity:0;transform:scale(3.5)}}
-@keyframes bmS{0%,100%{opacity:0;transform:translateX(0) scaleY(1)}20%{opacity:.6}80%{opacity:.2}50%{transform:translateX(25px) scaleY(1.05)}}
-@keyframes hxS{from{background-position:0 0}to{background-position:60px 104px}}
-@keyframes wvP{0%,100%{opacity:.35;transform:scaleX(.75)}50%{opacity:.9;transform:scaleX(1)}}
-@keyframes clnP{0%,100%{opacity:0;transform:scaleX(0) rotate(var(--clr,0deg))}35%,65%{opacity:.2;transform:scaleX(1) rotate(var(--clr,0deg))}}
-@media(max-width:1024px){.hg{grid-template-columns:1fr;max-width:640px}.hs{display:none}.ag{grid-template-columns:1fr;gap:2.5rem}.skg{grid-template-columns:1fr 1fr}.eg{grid-template-columns:1fr}.cgg{grid-template-columns:1fr}.pjg{grid-template-columns:1fr}.pjc.ft{grid-column:span 1;grid-template-columns:1fr}.cg{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.nl{display:none}.blbl{display:flex}.dots{display:none}.skg{grid-template-columns:1fr}.cg{grid-template-columns:1fr}.er{grid-template-columns:1fr}.fr{grid-template-columns:1fr}.fn{display:none}}
-/* Pulse element */
-.pulse{
-  position:relative;
-  width:28px;
-  height:28px;
-  display:block;
-  margin-bottom:1rem;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sreeved Prasad — AI & Data Science</title>
+    <style>
+        :root {
+            --nv: #0a0e1a;
+            --s: rgba(255, 255, 255, .04);
+            --b: rgba(255, 255, 255, .09);
+            --b2: rgba(255, 255, 255, .16);
+            --tx: #e8e4d9;
+            --t2: #a09b8c;
+            --t3: #6b6558;
+            --g: #c9a84c;
+            --g2: #e8c97a;
+            --tl: #4ab8c1;
+            --sf: 'Georgia', 'Times New Roman', Times, serif;
+            --ss: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --mn: 'Courier New', Courier, monospace;
+            --e: cubic-bezier(.4, 0, .2, 1);
+            --sp: cubic-bezier(.34, 1.56, .64, 1);
+            --dur: 640ms;
+            --gap: clamp(1.5rem, 5vw, 4rem);
+        }
 
-.pulse::before{
-  content:'';
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  animation:dotPulse 2s ease-in-out infinite;
-}
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-.pulse::after{
-  content:'';
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  animation:ringPulse 2s ease-out infinite;
-}
+        html {
+            font-size: 16px
+        }
 
-/* Color variants */
-.pulse.g::before{background:var(--g);box-shadow:0 0 10px var(--g)}
-.pulse.g::after{border:1px solid rgba(201,168,76,0.3)}
+        body {
+            font-family: var(--ss);
+            background: var(--nv);
+            color: var(--tx);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw
+        }
 
-.pulse.t::before{background:var(--tl);box-shadow:0 0 10px var(--tl)}
-.pulse.t::after{border:1px solid rgba(74,184,193,0.3)}
+        .sr {
+            display: none
+        }
 
-.pulse.g2::before{background:var(--g2);box-shadow:0 0 10px var(--g2)}
-.pulse.g2::after{border:1px solid rgba(232,201,122,0.3)}
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(ellipse 70% 60% at 15% 20%, rgba(201, 168, 76, .07) 0%, transparent 60%), radial-gradient(ellipse 50% 70% at 85% 75%, rgba(74, 184, 193, .05) 0%, transparent 60%), var(--nv)
+        }
 
-/* Small dots (bottom section) */
-.mini-dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  flex-shrink:0;
-}
+        .bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
+            background-size: 72px 72px
+        }
 
-.mini-dot.g{background:var(--g);box-shadow:0 0 8px var(--g)}
-.mini-dot.t{background:var(--tl);box-shadow:0 0 8px var(--tl)}
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: orbD 30s ease-in-out infinite
+        }
 
-/* Animations */
-@keyframes dotPulse{
-  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8}
-  50%{transform:translate(-50%,-50%) scale(1.4);opacity:1}
-}
+        .o1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(201, 168, 76, .06);
+            top: -150px;
+            left: -150px
+        }
 
-@keyframes ringPulse{
-  0%{transform:translate(-50%,-50%) scale(.6);opacity:.6}
-  70%{opacity:.2}
-  100%{transform:translate(-50%,-50%) scale(1.8);opacity:0}
-}
-.icon-box{
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  display: block;
-  position: relative;
-  background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(74,184,193,.12));
-  border: 1px solid rgba(201,168,76,.25);
-  overflow: hidden;
-}
+        .o2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(74, 184, 193, .05);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -10s;
+            animation-duration: 25s
+        }
 
-/* animated inner line */
-.icon-box::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,.6), transparent);
-  transform: translateX(-100%);
-  animation: skillLine 3s linear infinite;
-}
+        #slide-0 {
+            position: relative
+        }
 
-/* subtle glow dot */
-.icon-box::after{
-  content:'';
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--g);
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 10px rgba(201,168,76,.7);
-}
+        .hn-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none
+        }
 
-@keyframes skillLine{
-  100%{
-    transform: translateX(100%);
-  }
-}
-</style>
+        .hn-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            background: radial-gradient(ellipse 80% 70% at 40% 50%, rgba(10, 14, 26, .50) 0%, rgba(10, 14, 26, .80) 100%)
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2
+        }
+
+        .hn {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--g);
+            animation: hnP var(--d, 5s) ease-in-out infinite;
+            animation-delay: var(--dl, 0s);
+            opacity: 0
+        }
+
+        .hn.t {
+            background: var(--tl)
+        }
+
+        .hl {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            animation: hlF var(--ld, 8s) ease-in-out infinite;
+            animation-delay: var(--ldl, 0s)
+        }
+
+        .hn-scan {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 76, .18), transparent);
+            animation: hnS 14s linear infinite
+        }
+
+        .hn-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(201, 168, 76, .022) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 184, 193, .015) 1px, transparent 1px);
+            background-size: 90px 90px;
+            animation: hnG 30s linear infinite
+        }
+
+        /* Aurora blobs */
+        .aur {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            animation: auroraF var(--ad, 20s) ease-in-out infinite;
+            animation-delay: var(--adl, 0s);
+            opacity: 0
+        }
+
+        /* Drifting particles */
+        .pf {
+            position: absolute;
+            inset: 0;
+            overflow: hidden
+        }
+
+        .pt_ {
+            position: absolute;
+            border-radius: 50%;
+            animation: ptD var(--pd, 22s) linear infinite;
+            animation-delay: var(--pdl, 0s);
+            opacity: 0
+        }
+
+        /* Pulse rings */
+        .rng {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid;
+            animation: rngE var(--rd, 8s) ease-out infinite;
+            animation-delay: var(--rdl, 0s);
+            opacity: 0;
+            transform: scale(0)
+        }
+
+        /* Beam sweeps */
+        .bm {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 0;
+            animation: bmS var(--bd, 15s) ease-in-out infinite;
+            animation-delay: var(--bdl, 0s);
+            opacity: 0
+        }
+
+        /* Hex grid */
+        .hxg {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpath d='M30 4L4 19v30l26 15 26-15V19z' fill='none' stroke='%23c9a84c' stroke-width='0.4' opacity='0.5'/%3E%3Cpath d='M30 56L4 71v30l26 15 26-15V71z' fill='none' stroke='%234ab8c1' stroke-width='0.4' opacity='0.4'/%3E%3C/svg%3E");
+            background-size: 60px 104px;
+            opacity: .025;
+            animation: hxS 45s linear infinite
+        }
+
+        /* Wave bar */
+        .wvb {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, .4) 30%, rgba(74, 184, 193, .35) 60%, transparent 100%);
+            animation: wvP 5s ease-in-out infinite
+        }
+
+        /* Constellation lines */
+        .cln {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            animation: clnP var(--cld, 10s) ease-in-out infinite;
+            animation-delay: var(--clda, 0s);
+            opacity: 0
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            padding: .9rem var(--gap);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 14, 26, .82);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--b)
+        }
+
+        .nb {
+            font-family: var(--sf);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--tx);
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .nb::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--g);
+            box-shadow: 0 0 8px var(--g);
+            animation: nd 2s ease-in-out infinite
+        }
+
+        .nl {
+            display: flex;
+            gap: .1rem;
+            list-style: none
+        }
+
+        .nl label {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--t2);
+            padding: .4rem .75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: color .25s, background .25s;
+            border: 1px solid transparent
+        }
+
+        .nl label:hover {
+            color: var(--tx);
+            background: var(--s)
+        }
+
+        #s0:checked~nav .nl label[for=s0],
+        #s1:checked~nav .nl label[for=s1],
+        #s2:checked~nav .nl label[for=s2],
+        #s3:checked~nav .nl label[for=s3],
+        #s4:checked~nav .nl label[for=s4],
+        #s5:checked~nav .nl label[for=s5],
+        #s6:checked~nav .nl label[for=s6] {
+            color: var(--nv);
+            background: var(--g);
+            border-color: var(--g)
+        }
+
+        .blbl {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px
+        }
+
+        .blbl span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--tx);
+            border-radius: 2px;
+            transition: .35s
+        }
+
+        .mob {
+            position: fixed;
+            inset: 0;
+            z-index: 290;
+            background: rgba(10, 14, 26, .97);
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s var(--e)
+        }
+
+        #mob:checked~.mob {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        #mob:checked~nav .blbl span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg)
+        }
+
+        #mob:checked~nav .blbl span:nth-child(2) {
+            opacity: 0
+        }
+
+        #mob:checked~nav .blbl span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg)
+        }
+
+        .mob label {
+            font-family: var(--sf);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--tx);
+            cursor: pointer;
+            transition: color .25s
+        }
+
+        .mob label:hover {
+            color: var(--g)
+        }
+
+        .dots {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: .6rem
+        }
+
+        .dots label {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            cursor: pointer;
+            display: block;
+            transition: background .3s, height .3s var(--sp), border-radius .3s
+        }
+
+        #s0:checked~.dots label[for=s0],
+        #s1:checked~.dots label[for=s1],
+        #s2:checked~.dots label[for=s2],
+        #s3:checked~.dots label[for=s3],
+        #s4:checked~.dots label[for=s4],
+        #s5:checked~.dots label[for=s5],
+        #s6:checked~.dots label[for=s6] {
+            background: var(--g);
+            height: 22px;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(201, 168, 76, .18)
+        }
+
+        .vp {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .tr {
+            display: flex;
+            width: 700%;
+            height: 100%;
+            transition: transform var(--dur) var(--e)
+        }
+
+        #s0:checked~.vp .tr {
+            transform: translateX(0)
+        }
+
+        #s1:checked~.vp .tr {
+            transform: translateX(calc(-100vw))
+        }
+
+        #s2:checked~.vp .tr {
+            transform: translateX(calc(-200vw))
+        }
+
+        #s3:checked~.vp .tr {
+            transform: translateX(calc(-300vw))
+        }
+
+        #s4:checked~.vp .tr {
+            transform: translateX(calc(-400vw))
+        }
+
+        #s5:checked~.vp .tr {
+            transform: translateX(calc(-500vw))
+        }
+
+        #s6:checked~.vp .tr {
+            transform: translateX(calc(-600vw))
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100%;
+            flex-shrink: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--b) transparent
+        }
+
+        .si {
+            min-height: 100%;
+            padding: 5.5rem var(--gap) 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .ey {
+            font-family: var(--mn);
+            font-size: .65rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--g);
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem
+        }
+
+        .ey::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: var(--g)
+        }
+
+        .st {
+            font-family: var(--sf);
+            font-weight: 900;
+            font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+            line-height: 1.06;
+            letter-spacing: -.03em;
+            margin-bottom: 1.25rem
+        }
+
+        .st em {
+            font-style: italic;
+            color: var(--g)
+        }
+
+        .bt {
+            font-size: 1rem;
+            color: var(--t2);
+            line-height: 1.85;
+            max-width: 54ch;
+            margin-bottom: 1rem;
+            font-weight: 300
+        }
+
+        .card {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color .35s, transform .4s var(--sp), box-shadow .4s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--g), transparent);
+            opacity: 0;
+            transition: opacity .35s
+        }
+
+        .card:hover {
+            border-color: var(--b2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
+        }
+
+        .card:hover::before {
+            opacity: .6
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .8rem 1.85rem;
+            border-radius: 6px;
+            font-family: var(--ss);
+            font-size: .875rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform .3s var(--sp), box-shadow .3s;
+            letter-spacing: .03em
+        }
+
+        .bg- {
+            background: linear-gradient(135deg, var(--g), var(--g2));
+            color: var(--nv);
+            border: none
+        }
+
+        .bg-:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(201, 168, 76, .4)
+        }
+
+        .bo- {
+            background: transparent;
+            border: 1px solid var(--b2);
+            color: var(--tx)
+        }
+
+        .bo-:hover {
+            border-color: var(--g);
+            color: var(--g);
+            transform: translateY(-3px)
+        }
+
+        .pg {
+            font-family: var(--mn);
+            font-size: .6rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .25rem .65rem;
+            border-radius: 4px;
+            border: 1px solid var(--b)
+        }
+
+        .pg-g {
+            background: rgba(201, 168, 76, .12);
+            color: var(--g);
+            border: 1px solid rgba(201, 168, 76, .25)
+        }
+
+        .pg-t {
+            background: rgba(74, 184, 193, .1);
+            color: var(--tl);
+            border: 1px solid rgba(74, 184, 193, .2)
+        }
+
+        .tg {
+            font-family: var(--mn);
+            font-size: .6rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: .25rem .65rem;
+            border-radius: 4px;
+            border: 1px solid var(--b);
+            color: var(--t2);
+            display: inline-block;
+            cursor: default;
+            transition: border-color .25s, color .25s, transform .3s var(--sp)
+        }
+
+        .tg:hover {
+            border-color: var(--g);
+            color: var(--g);
+            transform: translateY(-2px)
+        }
+
+        .dv {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--g), var(--tl));
+            border-radius: 2px;
+            margin: 1.25rem 0
+        }
+
+        .tl {
+            position: relative;
+            padding-left: 2rem
+        }
+
+        .tl::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: .5rem;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--g), transparent)
+        }
+
+        .ti {
+            position: relative;
+            margin-bottom: 2rem
+        }
+
+        .ti::before {
+            content: '';
+            position: absolute;
+            left: -1.74rem;
+            top: .4rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--g);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, .2), 0 0 12px rgba(201, 168, 76, .18)
+        }
+
+        .ty {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .1em;
+            color: var(--g);
+            margin-bottom: .25rem
+        }
+
+        .tt {
+            font-family: var(--sf);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: .2rem
+        }
+
+        .to {
+            font-size: .875rem;
+            color: var(--t2);
+            font-weight: 300
+        }
+
+        .fg {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            margin-bottom: 1rem
+        }
+
+        .fg>label {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--t3)
+        }
+
+        .fg input,
+        .fg textarea {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 6px;
+            padding: .75rem 1rem;
+            color: var(--tx);
+            font-family: var(--ss);
+            font-size: .9rem;
+            outline: none;
+            resize: vertical;
+            transition: border-color .25s, box-shadow .25s
+        }
+
+        .fg input:focus,
+        .fg textarea:focus {
+            border-color: var(--g);
+            background: rgba(255, 255, 255, .07);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, .1)
+        }
+
+        .fg input::placeholder,
+        .fg textarea::placeholder {
+            color: var(--t3)
+        }
+
+        .sl {
+            font-family: var(--mn);
+            font-size: .65rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t2);
+            position: relative;
+            padding-bottom: 2px;
+            transition: color .25s;
+            text-decoration: none
+        }
+
+        .sl::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--g);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s
+        }
+
+        .sl:hover {
+            color: var(--g)
+        }
+
+        .sl:hover::after {
+            transform: scaleX(1)
+        }
+
+        .cc {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .35s, transform .4s var(--sp)
+        }
+
+        .cc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--g), var(--tl))
+        }
+
+        .cc:hover {
+            border-color: rgba(201, 168, 76, .3);
+            transform: translateY(-5px)
+        }
+
+        .hw {
+            position: relative;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .ho {
+            font-family: var(--mn);
+            font-size: .68rem;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--g);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            animation: fU .8s .15s var(--e) both
+        }
+
+        .ho::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--g)
+        }
+
+        .hn- {
+            font-family: var(--sf);
+            font-weight: 900;
+            font-size: clamp(3.2rem, 10vw, 7.5rem);
+            line-height: .92;
+            letter-spacing: -.04em;
+            margin-bottom: 1rem
+        }
+
+        .rw {
+            display: block;
+            overflow: hidden
+        }
+
+        .rw span {
+            display: block
+        }
+
+        .rw:nth-child(1) span {
+            animation: sU .95s .2s var(--e) both
+        }
+
+        .rw:nth-child(2) span {
+            animation: sU .95s .34s var(--e) both
+        }
+
+        .rw:nth-child(3) span {
+            animation: sU .95s .48s var(--e) both;
+            background: linear-gradient(135deg, var(--g), var(--g2), var(--tl));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .hr- {
+            font-family: var(--sf);
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--t2);
+            margin-bottom: 1.75rem;
+            font-weight: 400;
+            animation: fU .8s .6s var(--e) both
+        }
+
+        .hd {
+            font-size: clamp(.9rem, 1.8vw, 1.05rem);
+            color: var(--t2);
+            max-width: 50ch;
+            line-height: 1.85;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fU .8s .72s var(--e) both
+        }
+
+        .ha {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fU .8s .84s var(--e) both
+        }
+
+        .hsc {
+            margin-top: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: var(--mn);
+            font-size: .6rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--t3);
+            animation: fU .8s 1s var(--e) both
+        }
+
+        .hst {
+            width: 40px;
+            height: 1px;
+            background: var(--b2);
+            position: relative;
+            overflow: hidden
+        }
+
+        .hst::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--g);
+            animation: scA 2s ease-in-out infinite
+        }
+
+        .hg {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%
+        }
+
+        .hs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+
+        .sc {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .35s, transform .4s var(--sp), box-shadow .4s;
+            animation: fU .8s var(--e) both
+        }
+
+        .sc:nth-child(1) {
+            animation-delay: .9s
+        }
+
+        .sc:nth-child(2) {
+            animation-delay: 1s
+        }
+
+        .sc:nth-child(3) {
+            animation-delay: 1.1s
+        }
+
+        .sc:nth-child(4) {
+            animation-delay: 1.2s
+        }
+
+        .sc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--g), var(--tl));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .5s var(--e)
+        }
+
+        .sc:hover {
+            border-color: rgba(201, 168, 76, .3);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .4)
+        }
+
+        .sc:hover::before {
+            transform: scaleX(1)
+        }
+
+        .sn {
+            font-family: var(--sf);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--g), var(--g2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            display: block;
+            margin-bottom: .25rem
+        }
+
+        .sl- {
+            font-family: var(--mn);
+            font-size: .6rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--t3)
+        }
+
+        .ag {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 4rem;
+            align-items: center
+        }
+
+        .af {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(201, 168, 76, .08), rgba(74, 184, 193, .06));
+            border: 1px solid var(--b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative
+        }
+
+        .mn- {
+            font-family: var(--sf);
+            font-size: 7rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--g), var(--g2), var(--tl));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: .35;
+            user-select: none;
+            letter-spacing: -.05em;
+            animation: mP 4s ease-in-out infinite
+        }
+
+        .dp {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            left: 18px
+        }
+
+        .dpair {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 14px
+        }
+
+        .dd {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: dP 2s ease-in-out infinite
+        }
+
+        .dd.g {
+            background: var(--g);
+            box-shadow: 0 0 8px rgba(201, 168, 76, .6)
+        }
+
+        .dd.t {
+            background: var(--tl);
+            box-shadow: 0 0 8px rgba(74, 184, 193, .5)
+        }
+
+        .ab {
+            position: absolute;
+            background: rgba(10, 14, 26, .92);
+            border: 1px solid var(--b);
+            border-radius: 10px;
+            padding: .85rem 1.2rem;
+            backdrop-filter: blur(12px)
+        }
+
+        .ab1 {
+            bottom: -1.25rem;
+            right: -1.25rem
+        }
+
+        .ab2 {
+            top: -1.25rem;
+            left: -1.25rem
+        }
+
+        .bn {
+            font-family: var(--sf);
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--g);
+            line-height: 1;
+            display: block
+        }
+
+        .bl {
+            font-family: var(--mn);
+            font-size: .58rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t3);
+            display: block;
+            margin-top: .2rem
+        }
+
+        .pjg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem
+        }
+
+        .pjc {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform .4s var(--sp), border-color .35s, box-shadow .4s;
+            position: relative
+        }
+
+        .pjc:hover {
+            transform: translateY(-6px);
+            border-color: rgba(201, 168, 76, .3);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, .5)
+        }
+
+        .pjc.ft {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1.25fr 1fr
+        }
+
+        .pv {
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .pjc.ft .pv {
+            min-height: unset
+        }
+
+        .ga {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(201, 168, 76, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(201, 168, 76, .04) 1px, transparent 1px);
+            background-size: 24px 24px
+        }
+
+        .ov {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 14, 26, .78);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .75rem;
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .pjc:hover .ov {
+            opacity: 1
+        }
+
+        .ol {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .45rem 1rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, .25);
+            color: var(--tx);
+            transition: background .2s, border-color .2s, color .2s;
+            text-decoration: none
+        }
+
+        .ol:hover {
+            background: var(--g);
+            border-color: var(--g);
+            color: var(--nv)
+        }
+
+        .pb {
+            padding: 1.35rem
+        }
+
+        .pt {
+            font-family: var(--mn);
+            font-size: .58rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--g);
+            display: block;
+            margin-bottom: .4rem
+        }
+
+        .pn {
+            font-family: var(--sf);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: .4rem
+        }
+
+        .pd- {
+            font-size: .82rem;
+            color: var(--t2);
+            line-height: 1.7;
+            margin-bottom: .9rem;
+            font-weight: 300
+        }
+
+        .ptech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem
+        }
+
+        .ab- {
+            width: 44px;
+            height: 8px;
+            background: rgba(201, 168, 76, .3);
+            border: 1px solid var(--g);
+            border-radius: 4px;
+            position: absolute;
+            bottom: 28%;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .as1 {
+            width: 7px;
+            height: 62px;
+            border: 1px solid rgba(201, 168, 76, .55);
+            border-radius: 4px;
+            position: absolute;
+            bottom: calc(28% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: bottom center;
+            animation: aS1 3.5s ease-in-out infinite
+        }
+
+        .as2 {
+            width: 7px;
+            height: 48px;
+            border: 1px solid rgba(74, 184, 193, .55);
+            border-radius: 4px;
+            position: absolute;
+            bottom: calc(28% + 70px);
+            left: 50%;
+            transform: translateX(-50%) rotate(-18deg);
+            transform-origin: bottom center;
+            animation: aS2 3.5s ease-in-out infinite
+        }
+
+        .at {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--g);
+            box-shadow: 0 0 16px rgba(201, 168, 76, .7);
+            position: absolute;
+            bottom: calc(28% + 118px);
+            left: 50%;
+            transform: translateX(-50%);
+            animation: aT 3.5s ease-in-out infinite
+        }
+
+        .ao {
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(201, 168, 76, .18);
+            border-radius: 50%;
+            position: absolute;
+            bottom: calc(28% + 86px);
+            left: 50%;
+            transform: translateX(-50%);
+            animation: spin 5s linear infinite
+        }
+
+        .cr {
+            width: 68px;
+            height: 8px;
+            border: 2px solid var(--g);
+            border-radius: 50%;
+            position: absolute;
+            left: -6px;
+            box-shadow: 0 0 10px rgba(201, 168, 76, .35);
+            animation: rG 2s ease-in-out infinite
+        }
+
+        .cr1 {
+            top: 16px;
+            animation-delay: 0s
+        }
+
+        .cr2 {
+            top: 45px;
+            animation-delay: .66s
+        }
+
+        .cr3 {
+            top: 74px;
+            animation-delay: 1.32s
+        }
+
+        .skg {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem
+        }
+
+        .skg- {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color .35s, transform .4s var(--sp);
+            position: relative;
+            overflow: hidden
+        }
+
+        .skg-::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--g), var(--tl));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .5s var(--e)
+        }
+
+        .skg-:hover {
+            border-color: rgba(201, 168, 76, .25);
+            transform: translateY(-5px)
+        }
+
+        .skg-:hover::after {
+            transform: scaleX(1)
+        }
+
+        .si- {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: iB 3s ease-in-out infinite
+        }
+
+        .st- {
+            font-family: var(--sf);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: .6rem
+        }
+
+        .ss- {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--g);
+            margin-bottom: 1rem
+        }
+
+        .skl {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .45rem
+        }
+
+        .skl li {
+            font-size: .875rem;
+            color: var(--t2);
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .skl li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--g);
+            flex-shrink: 0
+        }
+
+        .cg {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem
+        }
+
+        .lb {
+            margin-top: 1.25rem;
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            cursor: pointer;
+            transition: border-color .35s
+        }
+
+        .lb:hover {
+            border-color: rgba(201, 168, 76, .25)
+        }
+
+        .bn- {
+            font-family: var(--mn);
+            font-size: .6rem;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--g), var(--g2));
+            color: var(--nv);
+            padding: .32rem .9rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0
+        }
+
+        .er {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.25rem
+        }
+
+        .ac {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            gap: .9rem;
+            align-items: center;
+            transition: border-color .35s, transform .3s
+        }
+
+        .ac:hover {
+            border-color: rgba(201, 168, 76, .2);
+            transform: translateY(-3px)
+        }
+
+        .eg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .str {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .75rem;
+            text-align: center
+        }
+
+        .tc {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 10px;
+            padding: 1rem;
+            transition: border-color .35s, transform .4s var(--sp)
+        }
+
+        .tc:hover {
+            border-color: rgba(201, 168, 76, .3);
+            transform: translateY(-4px)
+        }
+
+        .cgg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .fw {
+            background: var(--s);
+            border: 1px solid var(--b);
+            border-radius: 12px;
+            padding: 2rem
+        }
+
+        .fr {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+
+        .sr- {
+            display: flex;
+            flex-direction: column
+        }
+
+        .si-c {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: .85rem 0;
+            border-bottom: 1px solid var(--b)
+        }
+
+        .si-c:last-child {
+            border-bottom: none
+        }
+
+        .sic {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(201, 168, 76, .1);
+            border: 1px solid rgba(201, 168, 76, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+            flex-shrink: 0
+        }
+
+        .rb {
+            background: linear-gradient(135deg, rgba(201, 168, 76, .1), rgba(74, 184, 193, .06));
+            border: 1px solid rgba(201, 168, 76, .2);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            transition: border-color .35s, box-shadow .35s
+        }
+
+        .rb:hover {
+            border-color: rgba(201, 168, 76, .4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .3)
+        }
+
+        .lbt {
+            display: none
+        }
+
+        .lbo {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(5, 8, 18, .96);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s var(--e);
+            padding: 2rem
+        }
+
+        .lbt:checked~.lbo {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .lbb {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--b2);
+            box-shadow: 0 32px 80px rgba(0, 0, 0, .7);
+            display: flex;
+            flex-direction: column;
+            background: rgba(10, 14, 26, .95)
+        }
+
+        .lbh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .75rem 1.25rem;
+            background: rgba(255, 255, 255, .04);
+            border-bottom: 1px solid var(--b);
+            flex-shrink: 0
+        }
+
+        .lbtt {
+            font-family: var(--mn);
+            font-size: .65rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--g)
+        }
+
+        .lbc- {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .lbc- img {
+            max-width: 100%;
+            max-height: calc(90vh - 110px);
+            object-fit: contain;
+            display: block
+        }
+
+        .lbc- object {
+            width: 100%;
+            height: calc(90vh - 110px);
+            border: none
+        }
+
+        .lba {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .75rem 1.25rem;
+            background: rgba(255, 255, 255, .03);
+            border-top: 1px solid var(--b);
+            flex-shrink: 0;
+            flex-wrap: wrap
+        }
+
+        .lba a,
+        .lba label {
+            font-family: var(--mn);
+            font-size: .62rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .4rem .9rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background .25s, transform .3s var(--sp), box-shadow .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            cursor: pointer
+        }
+
+        .lba-g {
+            background: linear-gradient(135deg, var(--g), var(--g2));
+            color: var(--nv);
+            font-weight: 600
+        }
+
+        .lba-g:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 168, 76, .35)
+        }
+
+        .lba-o {
+            border: 1px solid var(--b2);
+            color: var(--t2)
+        }
+
+        .lba-o:hover {
+            border-color: var(--g);
+            color: var(--g);
+            transform: translateY(-2px)
+        }
+
+        .ct {
+            cursor: pointer;
+            display: block;
+            transition: transform .4s var(--sp), border-color .35s
+        }
+
+        .ct:hover {
+            transform: translateY(-5px)
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: rgba(10, 14, 26, .85);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--b);
+            padding: .65rem var(--gap);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: .5rem
+        }
+
+        .fl {
+            font-family: var(--sf);
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--tx)
+        }
+
+        .fl span {
+            color: var(--g)
+        }
+
+        .fn {
+            display: flex;
+            gap: 1.5rem
+        }
+
+        .fn label {
+            font-family: var(--mn);
+            font-size: .58rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t3);
+            cursor: pointer;
+            transition: color .25s
+        }
+
+        .fn label:hover {
+            color: var(--g)
+        }
+
+        .fc {
+            font-family: var(--mn);
+            font-size: .56rem;
+            color: var(--t3);
+            letter-spacing: .06em
+        }
+
+        a.clink {
+            color: var(--tx);
+            text-decoration: none;
+            font-family: var(--mn);
+            font-size: .78rem;
+            transition: color .25s
+        }
+
+        a.clink:hover {
+            color: var(--g)
+        }
+
+        /* ===== KEYFRAMES ===== */
+        @keyframes orbD {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            33% {
+                transform: translate(40px, -30px)
+            }
+
+            66% {
+                transform: translate(-30px, 40px)
+            }
+        }
+
+        @keyframes nd {
+
+            0%,
+            100% {
+                box-shadow: 0 0 4px var(--g)
+            }
+
+            50% {
+                box-shadow: 0 0 14px var(--g)
+            }
+        }
+
+        @keyframes fU {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes sU {
+            from {
+                transform: translateY(110%)
+            }
+
+            to {
+                transform: none
+            }
+        }
+
+        @keyframes scA {
+            0% {
+                left: -100%
+            }
+
+            100% {
+                left: 100%
+            }
+        }
+
+        @keyframes mP {
+
+            0%,
+            100% {
+                opacity: .25
+            }
+
+            50% {
+                opacity: .45
+            }
+        }
+
+        @keyframes dP {
+
+            0%,
+            100% {
+                opacity: .4;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3)
+            }
+        }
+
+        @keyframes hnP {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(.7)
+            }
+
+            40%,
+            60% {
+                opacity: .45;
+                transform: scale(1)
+            }
+        }
+
+        @keyframes hlF {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scaleX(0)
+            }
+
+            20%,
+            80% {
+                opacity: .2;
+                transform: scaleX(1)
+            }
+        }
+
+        @keyframes hnS {
+            0% {
+                top: 0%;
+                opacity: 0
+            }
+
+            4% {
+                opacity: 1
+            }
+
+            96% {
+                opacity: .5
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0
+            }
+        }
+
+        @keyframes hnG {
+            from {
+                background-position: 0 0, 0 0
+            }
+
+            to {
+                background-position: 90px 90px, 90px 90px
+            }
+        }
+
+        @keyframes aS1 {
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(-14deg)
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(14deg)
+            }
+        }
+
+        @keyframes aS2 {
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(-28deg)
+            }
+
+            50% {
+                transform: translateX(-50%) rotate(8deg)
+            }
+        }
+
+        @keyframes aT {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0)
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px)
+            }
+        }
+
+        @keyframes rG {
+
+            0%,
+            100% {
+                opacity: .45;
+                box-shadow: 0 0 4px rgba(201, 168, 76, .2)
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 16px rgba(201, 168, 76, .7)
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes iB {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+        }
+
+        @keyframes glG {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(74, 222, 128, .1)
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(74, 222, 128, .05)
+            }
+        }
+
+        /* New animation keyframes */
+        @keyframes auroraF {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translate(0, 0) scale(1)
+            }
+
+            15% {
+                opacity: 1
+            }
+
+            50% {
+                transform: translate(var(--ax, 35px), var(--ay, -20px)) scale(1.18)
+            }
+
+            85% {
+                opacity: .6
+            }
+        }
+
+        @keyframes ptD {
+            0% {
+                opacity: 0;
+                transform: translateY(105vh) scale(.5)
+            }
+
+            8% {
+                opacity: .8
+            }
+
+            88% {
+                opacity: .5
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-5vh) scale(1)
+            }
+        }
+
+        @keyframes rngE {
+            0% {
+                opacity: .55;
+                transform: scale(0)
+            }
+
+            65% {
+                opacity: .12
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(3.5)
+            }
+        }
+
+        @keyframes bmS {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translateX(0) scaleY(1)
+            }
+
+            20% {
+                opacity: .6
+            }
+
+            80% {
+                opacity: .2
+            }
+
+            50% {
+                transform: translateX(25px) scaleY(1.05)
+            }
+        }
+
+        @keyframes hxS {
+            from {
+                background-position: 0 0
+            }
+
+            to {
+                background-position: 60px 104px
+            }
+        }
+
+        @keyframes wvP {
+
+            0%,
+            100% {
+                opacity: .35;
+                transform: scaleX(.75)
+            }
+
+            50% {
+                opacity: .9;
+                transform: scaleX(1)
+            }
+        }
+
+        @keyframes clnP {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scaleX(0) rotate(var(--clr, 0deg))
+            }
+
+            35%,
+            65% {
+                opacity: .2;
+                transform: scaleX(1) rotate(var(--clr, 0deg))
+            }
+        }
+
+        @media(max-width:1024px) {
+            .hg {
+                grid-template-columns: 1fr;
+                max-width: 640px
+            }
+
+            .hs {
+                display: none
+            }
+
+            .ag {
+                grid-template-columns: 1fr;
+                gap: 2.5rem
+            }
+
+            .skg {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .eg {
+                grid-template-columns: 1fr
+            }
+
+            .cgg {
+                grid-template-columns: 1fr
+            }
+
+            .pjg {
+                grid-template-columns: 1fr
+            }
+
+            .pjc.ft {
+                grid-column: span 1;
+                grid-template-columns: 1fr
+            }
+
+            .cg {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:640px) {
+            .nl {
+                display: none
+            }
+
+            .blbl {
+                display: flex
+            }
+
+            .dots {
+                display: none
+            }
+
+            .skg {
+                grid-template-columns: 1fr
+            }
+
+            .cg {
+                grid-template-columns: 1fr
+            }
+
+            .er {
+                grid-template-columns: 1fr
+            }
+
+            .fr {
+                grid-template-columns: 1fr
+            }
+
+            .fn {
+                display: none
+            }
+        }
+
+        /* Pulse element */
+        .pulse {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .pulse::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        .pulse::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: ringPulse 2s ease-out infinite;
+        }
+
+        /* Color variants */
+        .pulse.g::before {
+            background: var(--g);
+            box-shadow: 0 0 10px var(--g)
+        }
+
+        .pulse.g::after {
+            border: 1px solid rgba(201, 168, 76, 0.3)
+        }
+
+        .pulse.t::before {
+            background: var(--tl);
+            box-shadow: 0 0 10px var(--tl)
+        }
+
+        .pulse.t::after {
+            border: 1px solid rgba(74, 184, 193, 0.3)
+        }
+
+        .pulse.g2::before {
+            background: var(--g2);
+            box-shadow: 0 0 10px var(--g2)
+        }
+
+        .pulse.g2::after {
+            border: 1px solid rgba(232, 201, 122, 0.3)
+        }
+
+        /* Small dots (bottom section) */
+        .mini-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .mini-dot.g {
+            background: var(--g);
+            box-shadow: 0 0 8px var(--g)
+        }
+
+        .mini-dot.t {
+            background: var(--tl);
+            box-shadow: 0 0 8px var(--tl)
+        }
+
+        /* Animations */
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: .8
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.4);
+                opacity: 1
+            }
+        }
+
+        @keyframes ringPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(.6);
+                opacity: .6
+            }
+
+            70% {
+                opacity: .2
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.8);
+                opacity: 0
+            }
+        }
+
+        .icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: block;
+            position: relative;
+            background: linear-gradient(135deg, rgba(201, 168, 76, .15), rgba(74, 184, 193, .12));
+            border: 1px solid rgba(201, 168, 76, .25);
+            overflow: hidden;
+        }
+
+        /* animated inner line */
+        .icon-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 76, .6), transparent);
+            transform: translateX(-100%);
+            animation: skillLine 3s linear infinite;
+        }
+
+        /* subtle glow dot */
+        .icon-box::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--g);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(201, 168, 76, .7);
+        }
+
+        @keyframes skillLine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
 </head>
+
 <body>
-<input class="sr" type="radio" name="slide" id="s0" checked/>
-<input class="sr" type="radio" name="slide" id="s1"/>
-<input class="sr" type="radio" name="slide" id="s2"/>
-<input class="sr" type="radio" name="slide" id="s3"/>
-<input class="sr" type="radio" name="slide" id="s4"/>
-<input class="sr" type="radio" name="slide" id="s5"/>
-<input class="sr" type="radio" name="slide" id="s6"/>
-<input class="sr" type="checkbox" id="mob"/>
-<input class="lbt sr" type="checkbox" id="lb-r"/>
-<input class="lbt sr" type="checkbox" id="lb-d"/>
-<input class="lbt sr" type="checkbox" id="lb-s"/>
-<input class="lbt sr" type="checkbox" id="lb-i"/>
+    <input class="sr" type="radio" name="slide" id="s0" checked />
+    <input class="sr" type="radio" name="slide" id="s1" />
+    <input class="sr" type="radio" name="slide" id="s2" />
+    <input class="sr" type="radio" name="slide" id="s3" />
+    <input class="sr" type="radio" name="slide" id="s4" />
+    <input class="sr" type="radio" name="slide" id="s5" />
+    <input class="sr" type="radio" name="slide" id="s6" />
+    <input class="sr" type="checkbox" id="mob" />
+    <input class="lbt sr" type="checkbox" id="lb-r" />
+    <input class="lbt sr" type="checkbox" id="lb-d" />
+    <input class="lbt sr" type="checkbox" id="lb-s" />
+    <input class="lbt sr" type="checkbox" id="lb-i" />
 
-<div class="lbo"><div class="lbb" style="max-width:780px"><div class="lbh"><span class="lbtt">Curriculum Vitae — Sreeved Prasad</span><label for="lb-r" class="lba-o" style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X Close</label></div><div class="lbc-"><object data="resume.pdf" type="application/pdf"><p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported — <a href="resume.pdf" download="Sreeved_Resume.pdf" style="color:var(--g)">Download here</a></p></object></div><div class="lba"><a href="resume.pdf" download="Sreeved_Resume.pdf" class="lba-g">Download Resume</a><label for="lb-r" class="lba-o">X Close</label></div></div></div>
-
-<div class="lbo"><div class="lbb"><div class="lbh"><span class="lbtt">DataCamp — Developing Large Language Models - Mar 2026</span><label for="lb-d" class="lba-o" style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X Close</label></div><div class="lbc-"><object data="certificate.pdf" type="application/pdf"><p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported — <a href="certificate.pdf" download="DataCamp_LLM.pdf" style="color:var(--g)">Download here</a></p></object></div><div class="lba"><a href="certificate.pdf" download="DataCamp_LLM.pdf" class="lba-g">Download</a><label for="lb-d" class="lba-o">X Close</label></div></div></div>
-
-<div class="lbo"><div class="lbb"><div class="lbh"><span class="lbtt">SqlDBM — SqlDBM Fundamentals - Mar 2026</span><label for="lb-s" class="lba-o" style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X Close</label></div><div class="lbc-"><object data="sqldbm_cert.pdf" type="application/pdf"><p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported — <a href="sqldbm_cert.pdf" download="SqlDBM_Cert.pdf" style="color:var(--g)">Download here</a></p></object></div><div class="lba"><a href="sqldbm_cert.pdf" download="SqlDBM_Cert.pdf" class="lba-g">Download</a><label for="lb-s" class="lba-o">X Close</label></div></div></div>
-
-<div class="lbo"><div class="lbb"><div class="lbh"><span class="lbtt">Vidyut Multifest</span><label for="lb-i" class="lba-o" style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X Close</label></div><div class="lbc-"><img src="infra.jpg" alt="Vidyut Multifest Certificate"/></div><div class="lba"><label for="lb-i" class="lba-o">X Close</label></div></div></div>
-
-<div class="bg"><div class="orb o1"></div><div class="orb o2"></div></div>
-<div class="mob"><label for="s0">Home</label><label for="s1">About</label><label for="s2">Projects</label><label for="s3">Skills</label><label for="s4">Certs</label><label for="s5">Education</label><label for="s6">Contact</label></div>
-
-<nav>
-  <div class="nb"></div>
-  <ul class="nl">
-    <li><label for="s0">Home</label></li><li><label for="s1">About</label></li>
-    <li><label for="s2">Projects</label></li><li><label for="s3">Skills</label></li>
-    <li><label for="s4">Certifications</label></li><li><label for="s5">Education</label></li>
-    <li><label for="s6">Contact</label></li>
-  </ul>
-  <label class="blbl" for="mob"><span></span><span></span><span></span></label>
-</nav>
-
-<div class="dots">
-  <label for="s0"></label><label for="s1"></label><label for="s2"></label>
-  <label for="s3"></label><label for="s4"></label><label for="s5"></label><label for="s6"></label>
-</div>
-
-<div class="vp"><div class="tr">
-
-<!-- HOME -->
-<div class="slide" id="slide-0"><div class="si">
-  <div class="hn-bg">
-    <div class="hxg" style="opacity:.06"></div>
-    <div class="hn-grid" style="opacity:.12"></div>
-    <div class="hn-scan"></div>
-
-    <!-- Aurora blobs -->
-    <div class="aur" style="width:550px;height:350px;background:radial-gradient(ellipse,rgba(201,168,76,.35),transparent 70%);top:5%;left:3%;--ad:24s;--adl:0s;--ax:40px;--ay:-20px"></div>
-    <div class="aur" style="width:420px;height:520px;background:radial-gradient(ellipse,rgba(74,184,193,.30),transparent 70%);top:25%;right:5%;--ad:30s;--adl:-8s;--ax:-30px;--ay:25px"></div>
-    <div class="aur" style="width:380px;height:300px;background:radial-gradient(ellipse,rgba(201,168,76,.32),transparent 70%);bottom:8%;left:18%;--ad:20s;--adl:-5s;--ax:20px;--ay:-15px"></div>
-    <div class="aur" style="width:460px;height:400px;background:radial-gradient(ellipse,rgba(74,184,193,.28),rgba(201,168,76,.22),transparent 70%);top:45%;left:38%;--ad:35s;--adl:-14s;--ax:-25px;--ay:30px"></div>
-
-    <!-- Particles -->
-    <div class="pf">
-      <div class="pt_ g" style="width:4px;height:4px;left:7%;background:var(--g);box-shadow:0 0 12px rgba(201,168,76,.9);--pd:23s;--pdl:0s"></div>
-      <div class="pt_ t" style="width:4px;height:4px;left:17%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:19s;--pdl:-4s"></div>
-      <div class="pt_ g" style="width:5px;height:5px;left:27%;background:var(--g);box-shadow:0 0 14px rgba(201,168,76,.95);--pd:28s;--pdl:-9s"></div>
-      <div class="pt_ t" style="width:4px;height:4px;left:36%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:21s;--pdl:-2s"></div>
-      <div class="pt_ g" style="width:5px;height:5px;left:45%;background:var(--g);box-shadow:0 0 16px rgba(201,168,76,1);--pd:32s;--pdl:-15s"></div>
-      <div class="pt_ t" style="width:4px;height:4px;left:55%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:18s;--pdl:-7s"></div>
-      <div class="pt_ g" style="width:5px;height:5px;left:63%;background:var(--g);box-shadow:0 0 14px rgba(201,168,76,.95);--pd:25s;--pdl:-11s"></div>
-      <div class="pt_ t" style="width:5px;height:5px;left:72%;background:var(--tl);box-shadow:0 0 14px rgba(74,184,193,.9);--pd:29s;--pdl:-3s"></div>
-      <div class="pt_ g" style="width:4px;height:4px;left:81%;background:var(--g);box-shadow:0 0 12px rgba(201,168,76,.9);--pd:22s;--pdl:-17s"></div>
-      <div class="pt_ t" style="width:5px;height:5px;left:90%;background:var(--tl);box-shadow:0 0 13px rgba(74,184,193,.85);--pd:26s;--pdl:-8s"></div>
-    </div>
-
-    <!-- Pulse rings -->
-    <div class="rng" style="width:100px;height:100px;top:15%;left:10%;border-color:rgba(201,168,76,.65);--rd:8s"></div>
-    <div class="rng" style="width:80px;height:80px;top:50%;left:25%;border-color:rgba(74,184,193,.6);--rd:10s"></div>
-    <div class="rng" style="width:140px;height:140px;top:30%;left:48%;border-color:rgba(201,168,76,.6);--rd:12s"></div>
-    <div class="rng" style="width:90px;height:90px;top:65%;left:58%;border-color:rgba(74,184,193,.6);--rd:9s"></div>
-    <div class="rng" style="width:110px;height:110px;top:12%;left:70%;border-color:rgba(201,168,76,.6);--rd:11s"></div>
-
-    <!-- Beams -->
-    <div class="bm" style="left:12%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.25),transparent);"></div>
-    <div class="bm" style="left:35%;background:linear-gradient(to bottom,transparent,rgba(74,184,193,.22),transparent);"></div>
-    <div class="bm" style="left:60%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.25),transparent);"></div>
-    <div class="bm" style="left:82%;background:linear-gradient(to bottom,transparent,rgba(74,184,193,.22),transparent);"></div>
-
-    <!-- Constellation lines -->
-    <div class="cln" style="width:200px;top:18%;left:6%;background:linear-gradient(90deg,rgba(201,168,76,.38),rgba(74,184,193,.2));"></div>
-    <div class="cln" style="width:170px;top:38%;left:20%;background:linear-gradient(90deg,rgba(74,184,193,.35),rgba(201,168,76,.25));"></div>
-    <div class="cln" style="width:240px;top:22%;left:40%;background:linear-gradient(90deg,rgba(201,168,76,.35),transparent);"></div>
-
-    <!-- Nodes -->
-    <div class="hn" style="width:7px;height:7px;box-shadow:0 0 14px rgba(201,168,76,.9);top:12%;left:8%"></div>
-    <div class="hn t" style="width:6px;height:6px;box-shadow:0 0 12px rgba(74,184,193,.85);top:22%;left:14%"></div>
-
-    <div class="wvb"></div>
-  </div>
-
-  <div class="hg">
-    <div class="hw">
-      <p class="ho">AI &amp; Data Science Student</p>
-      <h1 class="hn-">
-        <span class="rw"><span>Sreeved</span></span>
-        <span class="rw"><span>Prasad</span></span>
-        <span class="rw"><span>Prasad.</span></span>
-      </h1>
-      <p class="hr-">B.Tech · Amrita Vishwa Vidyapeetham, Amritapuri</p>
-      <p class="hd">Building intelligent systems bridging AI with real-world engineering.</p>
-      <div class="ha">
-        <label for="s2" class="btn bg-">View My Work</label>
-        <label for="s6" class="btn bo-">Get In Touch</label>
-      </div>
-      <div class="hsc"><div class="hst"></div>Use nav or dots to explore</div>
-    </div>
-
-    <div class="hs">
-      <div class="sc"><span class="sn">7.4</span><span class="sl-">CGPA out of 10</span></div>
-      <div class="sc"><span class="sn">3+</span><span class="sl-">Certifications</span></div>
-      <div class="sc"><span class="sn">2</span><span class="sl-">Major Projects</span></div>
-      <div class="sc"><span class="sn">97%</span><span class="sl-">SSC Score</span></div>
-    </div>
-  </div>
-</div></div><!-- ABOUT -->
-<style>
-  /* New Animations */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-
-  /* Layout Adjustments */
-  .ag {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-  }
-
-  /* Photo Container */
-  .photo-space {
-    position: relative;
-    width: 250px;
-    height: 320px;
-    background: #222; /* Placeholder color */
-    border-radius: 20px;
-    overflow: hidden;
-    animation: float 4s ease-in-out infinite;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  }
-
-  .photo-space img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Staggered Tag Animation */
-  .tg {
-    opacity: 0;
-    animation: fadeInUp 0.5s ease forwards;
-  }
-  .tg:nth-child(1) { animation-delay: 0.2s; }
-  .tg:nth-child(2) { animation-delay: 0.3s; }
-  .tg:nth-child(3) { animation-delay: 0.4s; }
-  .tg:nth-child(4) { animation-delay: 0.5s; }
-
-  /* Typing effect for the "intelligent systems" emphasis */
-  .st em {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid;
-    width: 0;
-    animation: typing 1.5s steps(20) forwards 0.8s;
-  }
-</style>
-
-<div class="slide" id="slide-1">
-  <div class="si" style="justify-content:center">
-    <div class="ag">
-      
-      <div class="photo-space">
-        <img src="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\Gemini_Generated_Image_qd9elpqd9elpqd9e.png" alt="Sreeved">
-      </div>
-
-      <div style="position:relative">
-        <div class="af">
-          <span class="mn-">SP</span>
-          <div class="dp">
-            <div class="dpair"><div class="dd g" style="animation-delay:0s"></div><div class="dd t" style="animation-delay:.5s"></div></div>
-            <div class="dpair"><div class="dd t" style="animation-delay:.25s"></div><div class="dd g" style="animation-delay:.75s"></div></div>
-            <div class="dpair"><div class="dd g" style="animation-delay:.5s"></div><div class="dd t" style="animation-delay:1s"></div></div>
-            <div class="dpair"><div class="dd t" style="animation-delay:.75s"></div><div class="dd g" style="animation-delay:1.25s"></div></div>
-          </div>
+    <div class="lbo">
+        <div class="lbb" style="max-width:780px">
+            <div class="lbh"><span class="lbtt">Curriculum Vitae — Sreeved Prasad</span><label for="lb-r" class="lba-o"
+                    style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X
+                    Close</label></div>
+            <div class="lbc-"><object data="resume.pdf" type="application/pdf">
+                    <p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported —
+                        <a href="resume.pdf" download="Sreeved_Resume.pdf" style="color:var(--g)">Download here</a></p>
+                </object></div>
+            <div class="lba"><a href="resume.pdf" download="Sreeved_Resume.pdf" class="lba-g">Download Resume</a><label
+                    for="lb-r" class="lba-o">X Close</label></div>
         </div>
-        <div class="ab ab1"><span class="bn">7.4</span><span class="bl">CGPA / 10</span></div>
-        <div class="ab ab2"><span class="bn">97%</span><span class="bl">SSC Score</span></div>
-      </div>
+    </div>
 
-      <div style="flex: 1; min-width: 300px;">
-        <p class="ey">About Me</p>
-        <h2 class="st">Turning data into<br><em>intelligent systems.</em></h2>
-        <div class="dv"></div>
-        <p class="bt">Hi — I'm Sreeved, a B.Tech student in AI &amp; Data Science at Amrita Vishwa Vidyapeetham. I bridge artificial intelligence and real-world engineering challenges.</p>
-        
-        <div style="display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem">
-          <span class="tg">Deep Learning</span>
-          <span class="tg">Computer Vision</span>
-          <span class="tg">Robotics</span>
-          <span class="tg">Structural FEA</span>
+    <div class="lbo">
+        <div class="lbb">
+            <div class="lbh"><span class="lbtt">DataCamp — Developing Large Language Models - Mar 2026</span><label
+                    for="lb-d" class="lba-o"
+                    style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X
+                    Close</label></div>
+            <div class="lbc-"><object data="certificate.pdf" type="application/pdf">
+                    <p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported —
+                        <a href="certificate.pdf" download="DataCamp_LLM.pdf" style="color:var(--g)">Download here</a>
+                    </p>
+                </object></div>
+            <div class="lba"><a href="certificate.pdf" download="DataCamp_LLM.pdf" class="lba-g">Download</a><label
+                    for="lb-d" class="lba-o">X Close</label></div>
         </div>
-        
-        <div style="display:flex;gap:.9rem;flex-wrap:wrap">
-          <label for="s2" class="btn bg-">View Projects</label>
-          <label for="s6" class="btn bo-">Contact Me</label>
+    </div>
+
+    <div class="lbo">
+        <div class="lbb">
+            <div class="lbh"><span class="lbtt">SqlDBM — SqlDBM Fundamentals - Mar 2026</span><label for="lb-s"
+                    class="lba-o"
+                    style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X
+                    Close</label></div>
+            <div class="lbc-"><object data="sqldbm_cert.pdf" type="application/pdf">
+                    <p style="padding:2rem;color:var(--t2);text-align:center;font-family:var(--ss)">PDF not supported —
+                        <a href="sqldbm_cert.pdf" download="SqlDBM_Cert.pdf" style="color:var(--g)">Download here</a>
+                    </p>
+                </object></div>
+            <div class="lba"><a href="sqldbm_cert.pdf" download="SqlDBM_Cert.pdf" class="lba-g">Download</a><label
+                    for="lb-s" class="lba-o">X Close</label></div>
         </div>
-      </div>
-
     </div>
-  </div>
-</div>
-<!-- PROJECTS -->
-<style>
-  /* 1. Global Project Card Animations */
-  .pjc {
-    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    border-radius: 12px; /* Smooth corners */
-  }
 
-  /* Floating Effect for all cards */
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
-  }
-  
-  .pjc { animation: float 6s ease-in-out infinite; }
-  .pjc:nth-child(2) { animation-delay: 1s; }
-  .pjc:nth-child(3) { animation-delay: 2s; }
-
-  /* Hover Lift & Glow */
-  .pjc:hover {
-    transform: translateY(-15px) scale(1.02) !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(74, 184, 193, 0.1);
-    z-index: 10;
-    animation-play-state: paused; /* Stop floating when interacting */
-  }
-
-  /* 2. Scanning Light Effect on the Preview (pv) */
-  .pv::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    transition: 0.5s;
-  }
-  .pjc:hover .pv::after {
-    left: 150%;
-    transition: 0.8s;
-  }
-
-  /* 3. Technology Tag "Pop" */
-  .pg {
-    transition: all 0.3s ease;
-  }
-  .pjc:hover .pg {
-    transform: scale(1.1);
-    border-color: currentColor;
-  }
-
-  /* 4. Neural Network Pulse (Project 3) */
-  @keyframes pulseNode {
-    0% { r: 5; opacity: 0.5; }
-    50% { r: 8; opacity: 1; }
-    100% { r: 5; opacity: 0.5; }
-  }
-  
-  .pjc:hover circle {
-    animation: pulseNode 1.5s infinite ease-in-out !important;
-  }
-
-  /* 5. SVG Line "Signal" Animation */
-  @keyframes lineFlow {
-    0% { stroke-dashoffset: 100; opacity: 0.2; }
-    50% { opacity: 0.6; }
-    100% { stroke-dashoffset: 0; opacity: 0.2; }
-  }
-
-  .pjc:hover line {
-    stroke-dasharray: 10;
-    animation: lineFlow 2s linear infinite !important;
-  }
-</style>
-
-<div class="slide" id="slide-2">
-  <div class="si">
-    <p class="ey">Selected Work</p>
-    <h2 class="st">Projects that <em>define me.</em></h2>
-    <div class="pjg">
-      
-      <article class="pjc ft">
-        <div class="pv" style="background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(74,184,193,.04))">
-          <div class="ga"></div>
-          <div class="ab-"></div><div class="as1"></div><div class="as2"></div><div class="at"></div><div class="ao"></div>
-          <p style="position:absolute;bottom:.75rem;left:.75rem;font-family:var(--mn);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g);opacity:.6">CoppeliaSim Simulation</p>
-          <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank" rel="noopener" class="ol">GitHub</a><a href="#" class="ol">Case Study</a></div>
+    <div class="lbo">
+        <div class="lbb">
+            <div class="lbh"><span class="lbtt">Vidyut Multifest</span><label for="lb-i" class="lba-o"
+                    style="font-family:var(--mn);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem;border-radius:4px;border:1px solid var(--b2);color:var(--t2);cursor:pointer">X
+                    Close</label></div>
+            <div class="lbc-"><img src="infra.jpg" alt="Vidyut Multifest Certificate" /></div>
+            <div class="lba"><label for="lb-i" class="lba-o">X Close</label></div>
         </div>
-        <div class="pb">
-          <span class="pt">Robotics · Computer Vision · Aug–Dec 2025</span>
-          <h3 class="pn">Vision-Guided Robotic Arm</h3>
-          <p class="pd-">Autonomous robotic arm in CoppeliaSim for real-time shape &amp; colour classification with automated object sorting.</p>
-          <div class="ptech"><span class="pg pg-g">CoppeliaSim</span><span class="pg pg-g">Python</span><span class="pg pg-g">OpenCV</span><span class="pg pg-t">Isaac Sim</span></div>
-        </div>
-      </article>
-
-      <article class="pjc">
-        <div class="pv" style="background:linear-gradient(135deg,rgba(74,184,193,.05),rgba(201,168,76,.03));display:flex;align-items:center;justify-content:center">
-          <div class="ga"></div>
-          <div style="position:relative;width:80px;height:130px"><div style="position:absolute;width:60px;height:110px;border:1px solid rgba(74,184,193,.4);border-radius:4px;top:10px;left:10px"></div><div class="cr cr1"></div><div class="cr cr2"></div><div class="cr cr3"></div></div>
-          <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank" rel="noopener" class="ol">GitHub</a></div>
-        </div>
-        <div class="pb">
-          <span class="pt">Structural Engineering · FEA · Feb–Jun 2025</span>
-          <h3 class="pn">ANSYS Buckling Analysis</h3>
-          <p class="pd-">FEA-based buckling analysis of thin-walled cylinders assessing stiffening ring impact on critical load capacity.</p>
-          <div class="ptech"><span class="pg pg-t">ANSYS</span><span class="pg pg-t">MATLAB</span><span class="pg pg-g">FEA</span></div>
-        </div>
-      </article>
-
-      <article class="pjc">
-        <div class="pv" style="background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(74,184,193,.06));display:flex;align-items:center;justify-content:center">
-          <div class="ga"></div>
-          <svg width="180" height="110" viewBox="0 0 180 110" style="position:relative;z-index:1">
-            <g opacity=".15" stroke="white" stroke-width="1">
-              <line x1="20" y1="22" x2="70" y2="14"/><line x1="20" y1="22" x2="70" y2="38"/><line x1="20" y1="55" x2="70" y2="38"/><line x1="20" y1="55" x2="70" y2="62"/><line x1="20" y1="88" x2="70" y2="62"/><line x1="75" y1="14" x2="120" y2="22"/><line x1="75" y1="38" x2="120" y2="55"/><line x1="75" y1="62" x2="120" y2="55"/><line x1="75" y1="86" x2="120" y2="88"/><line x1="125" y1="22" x2="165" y2="38"/><line x1="125" y1="55" x2="165" y2="38"/><line x1="125" y1="88" x2="165" y2="72"/>
-            </g>
-            <circle cx="20" cy="22" r="6" fill="#c9a84c" style="animation:dP 2s 0s ease-in-out infinite"/><circle cx="20" cy="55" r="6" fill="#c9a84c" style="animation:dP 2s .3s ease-in-out infinite"/><circle cx="20" cy="88" r="6" fill="#c9a84c" style="animation:dP 2s .6s ease-in-out infinite"/>
-            <circle cx="75" cy="14" r="5" fill="#4ab8c1" style="animation:dP 2s .15s ease-in-out infinite"/><circle cx="75" cy="38" r="5" fill="#4ab8c1" style="animation:dP 2s .45s ease-in-out infinite"/><circle cx="75" cy="62" r="5" fill="#4ab8c1" style="animation:dP 2s .75s ease-in-out infinite"/><circle cx="75" cy="86" r="5" fill="#4ab8c1" style="animation:dP 2s 1.05s ease-in-out infinite"/>
-            <circle cx="125" cy="22" r="5" fill="#4ab8c1" style="animation:dP 2s .3s ease-in-out infinite"/><circle cx="125" cy="55" r="5" fill="#4ab8c1" style="animation:dP 2s .6s ease-in-out infinite"/><circle cx="125" cy="88" r="5" fill="#4ab8c1" style="animation:dP 2s .9s ease-in-out infinite"/>
-            <circle cx="165" cy="38" r="6" fill="#c9a84c" style="animation:dP 2s .4s ease-in-out infinite"/><circle cx="165" cy="72" r="6" fill="#c9a84c" style="animation:dP 2s .8s ease-in-out infinite"/>
-          </svg>
-          <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank" rel="noopener" class="ol">GitHub</a></div>
-        </div>
-        <div class="pb">
-          <span class="pt">Machine Learning · Deep Learning · 2026</span>
-          <h3 class="pn">Deep Learning Pipeline</h3>
-          <p class="pd-">End-to-end neural networks for classification &amp; regression. DataCamp certified — Developing LLMs.</p>
-          <div class="ptech"><span class="pg pg-g">PyTorch</span><span class="pg pg-g">Keras</span><span class="pg pg-t">NumPy</span></div>
-        </div>
-      </article>
-    </div>
-  </div>
-</div>
-<!-- SKILLS -->
-<div class="slide" id="slide-3"><div class="si">
-  <p class="ey">Expertise</p><h2 class="st">Skills &amp; <em>Technologies.</em></h2>
-  
-  <div class="skg">
-
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">Programming</h3>
-      <p class="ss-">Core Languages</p>
-      <ul class="skl">
-        <li>Python — Data, ML, Automation</li>
-        <li>SQL — Database Queries</li>
-        <li>Java — OOP Design</li>
-        <li>R — Statistical Analysis</li>
-      </ul>
     </div>
 
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">Engineering Tools</h3>
-      <p class="ss-">Simulation &amp; Analysis</p>
-      <ul class="skl">
-        <li>ANSYS — Structural FEA</li>
-        <li>MATLAB — Numerical Methods</li>
-        <li>CoppeliaSim — Robotics</li>
-        <li>NVIDIA Isaac Sim</li>
-      </ul>
+    <div class="bg">
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+    </div>
+    <div class="mob"><label for="s0">Home</label><label for="s1">About</label><label for="s2">Projects</label><label
+            for="s3">Skills</label><label for="s4">Certs</label><label for="s5">Education</label><label
+            for="s6">Contact</label></div>
+
+    <nav>
+        <div class="nb"></div>
+        <ul class="nl">
+            <li><label for="s0">Home</label></li>
+            <li><label for="s1">About</label></li>
+            <li><label for="s2">Projects</label></li>
+            <li><label for="s3">Skills</label></li>
+            <li><label for="s4">Certifications</label></li>
+            <li><label for="s5">Education</label></li>
+            <li><label for="s6">Contact</label></li>
+        </ul>
+        <label class="blbl" for="mob"><span></span><span></span><span></span></label>
+    </nav>
+
+    <div class="dots">
+        <label for="s0"></label><label for="s1"></label><label for="s2"></label>
+        <label for="s3"></label><label for="s4"></label><label for="s5"></label><label for="s6"></label>
     </div>
 
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">AI / ML</h3>
-      <p class="ss-">Frameworks &amp; Concepts</p>
-      <ul class="skl">
-        <li>Deep Learning — PyTorch, Keras</li>
-        <li>Computer Vision — OpenCV</li>
-        <li>Data Analysis — NumPy, Pandas</li>
-        <li>Neural Network Architecture</li>
-      </ul>
-    </div>
+    <div class="vp">
+        <div class="tr">
 
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">Mechanical</h3>
-      <p class="ss-">Engineering Fundamentals</p>
-      <ul class="skl">
-        <li>Structural Stability Analysis</li>
-        <li>Buckling &amp; Load Analysis</li>
-        <li>Kinematics &amp; Dynamics</li>
-        <li>Material Mechanics</li>
-      </ul>
-    </div>
+            <!-- HOME -->
+            <div class="slide" id="slide-0">
+                <div class="si">
+                    <div class="hn-bg">
+                        <div class="hxg" style="opacity:.06"></div>
+                        <div class="hn-grid" style="opacity:.12"></div>
+                        <div class="hn-scan"></div>
 
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">Soft Skills</h3>
-      <p class="ss-">Professional Qualities</p>
-      <ul class="skl">
-        <li>Active Listening</li>
-        <li>Adaptability</li>
-        <li>Team Collaboration</li>
-        <li>Communication</li>
-      </ul>
-    </div>
+                        <!-- Aurora blobs -->
+                        <div class="aur"
+                            style="width:550px;height:350px;background:radial-gradient(ellipse,rgba(201,168,76,.35),transparent 70%);top:5%;left:3%;--ad:24s;--adl:0s;--ax:40px;--ay:-20px">
+                        </div>
+                        <div class="aur"
+                            style="width:420px;height:520px;background:radial-gradient(ellipse,rgba(74,184,193,.30),transparent 70%);top:25%;right:5%;--ad:30s;--adl:-8s;--ax:-30px;--ay:25px">
+                        </div>
+                        <div class="aur"
+                            style="width:380px;height:300px;background:radial-gradient(ellipse,rgba(201,168,76,.32),transparent 70%);bottom:8%;left:18%;--ad:20s;--adl:-5s;--ax:20px;--ay:-15px">
+                        </div>
+                        <div class="aur"
+                            style="width:460px;height:400px;background:radial-gradient(ellipse,rgba(74,184,193,.28),rgba(201,168,76,.22),transparent 70%);top:45%;left:38%;--ad:35s;--adl:-14s;--ax:-25px;--ay:30px">
+                        </div>
 
-    <div class="skg-">
-      <span class="si- icon-box"></span>
-      <h3 class="st-">Dev Tools</h3>
-      <p class="ss-">Workflow</p>
-      <ul class="skl">
-        <li>Git &amp; GitHub</li>
-        <li>Jupyter Notebooks</li>
-        <li>Linux Terminal</li>
-        <li>VS Code</li>
-      </ul>
-    </div>
+                        <!-- Particles -->
+                        <div class="pf">
+                            <div class="pt_ g"
+                                style="width:4px;height:4px;left:7%;background:var(--g);box-shadow:0 0 12px rgba(201,168,76,.9);--pd:23s;--pdl:0s">
+                            </div>
+                            <div class="pt_ t"
+                                style="width:4px;height:4px;left:17%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:19s;--pdl:-4s">
+                            </div>
+                            <div class="pt_ g"
+                                style="width:5px;height:5px;left:27%;background:var(--g);box-shadow:0 0 14px rgba(201,168,76,.95);--pd:28s;--pdl:-9s">
+                            </div>
+                            <div class="pt_ t"
+                                style="width:4px;height:4px;left:36%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:21s;--pdl:-2s">
+                            </div>
+                            <div class="pt_ g"
+                                style="width:5px;height:5px;left:45%;background:var(--g);box-shadow:0 0 16px rgba(201,168,76,1);--pd:32s;--pdl:-15s">
+                            </div>
+                            <div class="pt_ t"
+                                style="width:4px;height:4px;left:55%;background:var(--tl);box-shadow:0 0 12px rgba(74,184,193,.85);--pd:18s;--pdl:-7s">
+                            </div>
+                            <div class="pt_ g"
+                                style="width:5px;height:5px;left:63%;background:var(--g);box-shadow:0 0 14px rgba(201,168,76,.95);--pd:25s;--pdl:-11s">
+                            </div>
+                            <div class="pt_ t"
+                                style="width:5px;height:5px;left:72%;background:var(--tl);box-shadow:0 0 14px rgba(74,184,193,.9);--pd:29s;--pdl:-3s">
+                            </div>
+                            <div class="pt_ g"
+                                style="width:4px;height:4px;left:81%;background:var(--g);box-shadow:0 0 12px rgba(201,168,76,.9);--pd:22s;--pdl:-17s">
+                            </div>
+                            <div class="pt_ t"
+                                style="width:5px;height:5px;left:90%;background:var(--tl);box-shadow:0 0 13px rgba(74,184,193,.85);--pd:26s;--pdl:-8s">
+                            </div>
+                        </div>
 
-  </div>
-</div></div>
+                        <!-- Pulse rings -->
+                        <div class="rng"
+                            style="width:100px;height:100px;top:15%;left:10%;border-color:rgba(201,168,76,.65);--rd:8s">
+                        </div>
+                        <div class="rng"
+                            style="width:80px;height:80px;top:50%;left:25%;border-color:rgba(74,184,193,.6);--rd:10s">
+                        </div>
+                        <div class="rng"
+                            style="width:140px;height:140px;top:30%;left:48%;border-color:rgba(201,168,76,.6);--rd:12s">
+                        </div>
+                        <div class="rng"
+                            style="width:90px;height:90px;top:65%;left:58%;border-color:rgba(74,184,193,.6);--rd:9s">
+                        </div>
+                        <div class="rng"
+                            style="width:110px;height:110px;top:12%;left:70%;border-color:rgba(201,168,76,.6);--rd:11s">
+                        </div>
 
-<!-- CERTS -->
-<div class="slide" id="slide-4">
-  <div class="si">
-    <p class="ey">Achievements</p>
-    <h2 class="st">Certifications &amp; <em>Recognition.</em></h2>
-    
-    <div class="cg">
+                        <!-- Beams -->
+                        <div class="bm"
+                            style="left:12%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.25),transparent);">
+                        </div>
+                        <div class="bm"
+                            style="left:35%;background:linear-gradient(to bottom,transparent,rgba(74,184,193,.22),transparent);">
+                        </div>
+                        <div class="bm"
+                            style="left:60%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.25),transparent);">
+                        </div>
+                        <div class="bm"
+                            style="left:82%;background:linear-gradient(to bottom,transparent,rgba(74,184,193,.22),transparent);">
+                        </div>
 
-      <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\certificate (3).pdf" target="_blank" class="cc ct" style="text-decoration:none">
-        <span class="pulse g"></span>
-        <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">Developing Large Language Models</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">DataCamp · #811,799</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Mar 2026</p>
-        <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View Certificate</p>
-      </a>
+                        <!-- Constellation lines -->
+                        <div class="cln"
+                            style="width:200px;top:18%;left:6%;background:linear-gradient(90deg,rgba(201,168,76,.38),rgba(74,184,193,.2));">
+                        </div>
+                        <div class="cln"
+                            style="width:170px;top:38%;left:20%;background:linear-gradient(90deg,rgba(74,184,193,.35),rgba(201,168,76,.25));">
+                        </div>
+                        <div class="cln"
+                            style="width:240px;top:22%;left:40%;background:linear-gradient(90deg,rgba(201,168,76,.35),transparent);">
+                        </div>
 
-      <a href="C:\Users\HP\Pictures\Screenshots\Screenshot 2026-03-23 173746.png" target="_blank" class="cc ct" style="text-decoration:none">
-        <span class="pulse t"></span>
-        <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">SqlDBM Fundamentals</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">SqlDBM · ID: 0g7ugvqos3</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Mar 2026</p>
-        <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View Certificate</p>
-      </a>
+                        <!-- Nodes -->
+                        <div class="hn"
+                            style="width:7px;height:7px;box-shadow:0 0 14px rgba(201,168,76,.9);top:12%;left:8%"></div>
+                        <div class="hn t"
+                            style="width:6px;height:6px;box-shadow:0 0 12px rgba(74,184,193,.85);top:22%;left:14%">
+                        </div>
 
-      <a  target="_blank" class="cc ct" style="text-decoration:none">
-        <span class="pulse g2"></span>
-        <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">NVIDIA Isaac Sim</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">NVIDIA Deep Learning Inst.</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Jun 2025</p>
-        <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View Certificate</p>
-      </a>
+                        <div class="wvb"></div>
+                    </div>
 
-      <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\Screenshot 2026-03-22 at 9.34.59 PM.png" target="_blank" class="cc ct" style="text-decoration:none">
-        <span class="pulse t"></span>
-        <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">Communication Skills</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">TCS iON</p>
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Nov 2025</p>
-        <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View Certificate</p>
-      </a>
+                    <div class="hg">
+                        <div class="hw">
+                            <p class="ho">AI &amp; Data Science Student</p>
+                            <h1 class="hn-">
+                                <span class="rw"><span>Sreeved</span></span>
+                                <span class="rw"><span>Prasad.</span></span>
+                            </h1>
+                            <p class="hr-">B.Tech · Amrita Vishwa Vidyapeetham, Amritapuri</p>
+                            <p class="hd">Building intelligent systems bridging AI with real-world engineering.</p>
+                            <div class="ha">
+                                <label for="s2" class="btn bg-">View My Work</label>
+                                <label for="s6" class="btn bo-">Get In Touch</label>
+                            </div>
+                            <div class="hsc">
+                                <div class="hst"></div>Use nav or dots to explore
+                            </div>
+                        </div>
 
-    </div>
+                        <div class="hs">
+                            <div class="sc"><span class="sn">7.4</span><span class="sl-">CGPA out of 10</span></div>
+                            <div class="sc"><span class="sn">3+</span><span class="sl-">Certifications</span></div>
+                            <div class="sc"><span class="sn">2</span><span class="sl-">Major Projects</span></div>
+                            <div class="sc"><span class="sn">97%</span><span class="sl-">SSC Score</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- ABOUT -->
+            <style>
+                /* New Animations */
+                @keyframes float {
 
-    <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\infra.jpg" target="_blank" class="lb" style="text-decoration:none; display:flex; justify-content:space-between; align-items:center;">
-      <div>
-        <p style="font-family:var(--mn);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g);margin-bottom:.3rem">Leadership · Certificate of Appreciation</p>
-        <p style="font-family:var(--sf);font-size:1.05rem;font-weight:700;margin-bottom:.2rem">Vidyut Multifest 2025 — Infrastructure Management</p>
-        <p style="font-size:.85rem;color:var(--t2);font-weight:300">National-level Tech Fest · Amrita Vishwa Vidyapeetham, Amritapuri</p>
-        <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.4rem">Click to view certificate</p>
-      </div>
-      <span class="bn-">National Level</span>
-    </a>
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
 
-    <div class="er">
-      <div class="ac">
-        <span class="mini-dot g"></span>
-        <div>
-          <p style="font-weight:600;font-size:.875rem;margin-bottom:.15rem">State-level Athlete</p>
-          <p style="font-size:.78rem;color:var(--t2);font-weight:300">200 m Sprint — Kerala State</p>
-        </div>
-      </div>
+                    50% {
+                        transform: translateY(-10px);
+                    }
+                }
 
-      <div class="ac">
-        <span class="mini-dot t"></span>
-        <div>
-          <p style="font-weight:600;font-size:.875rem;margin-bottom:.15rem">NSS Volunteer</p>
-          <p style="font-size:.78rem;color:var(--t2);font-weight:300">National Service Scheme · Unit No. 10</p>
-        </div>
-      </div>
-    </div>
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
 
-  </div>
-</div>
-<!-- EDUCATION -->
-<div class="slide" id="slide-5"><div class="si">
-  <p class="ey">Academic Journey</p><h2 class="st">Education &amp; <em>Background.</em></h2>
-  <div class="eg">
-    <div><div class="tl">
-      <div class="ti"><p class="ty">2024 – Present</p><p class="tt">B.Tech in AI &amp; Data Science</p><p class="to">Amrita Vishwa Vidyapeetham, Amritapuri</p><span class="pg pg-g" style="margin-top:.6rem;display:inline-block">CGPA 7.4 / 10</span></div>
-      <div class="ti"><p class="ty">2022 – 2023</p><p class="tt">HSC — Class XII</p><p class="to">IMNSGHSS Mayyil, Kannur, Kerala</p><span class="pg pg-g" style="margin-top:.6rem;display:inline-block">93%</span></div>
-      <div class="ti"><p class="ty">2021 – 2022</p><p class="tt">SSC — Class X</p><p class="to">IMNSGHSS Mayyil, Kannur, Kerala</p><span class="pg pg-g" style="margin-top:.6rem;display:inline-block">97%</span></div>
-    </div></div>
-    <div>
-      <div class="card" style="margin-bottom:1.25rem"><p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase;margin-bottom:.5rem">Location</p><p style="font-weight:600;margin-bottom:.2rem">Nilaav, Mayyil</p><p style="color:var(--t2);font-size:.875rem;font-weight:300">Kannur, Kerala, India</p></div>
-      <div class="card" style="margin-bottom:1.25rem">
-        <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase;margin-bottom:.5rem">Contact</p>
-        <a href="mailto:sreeved4@gmail.com" class="clink" style="display:block;margin-bottom:.3rem">sreeved4@gmail.com</a>
-        <a href="tel:+918281050223" class="clink">+91 8281050223</a>
-      </div>
-      <div class="str">
-        <div class="tc"><p style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">7.4</p><p style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">CGPA</p></div>
-        <div class="tc"><p style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">3</p><p style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">Certs</p></div>
-        <div class="tc"><p style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">2</p><p style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">Projects</p></div>
-      </div>
-    </div>
-  </div>
-</div></div>
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
 
-<!-- CONTACT -->
-<div class="slide" id="slide-6">
-  <div class="si">
-    <p class="ey">Get In Touch</p>
-    <h2 class="st">Let's build something <em>remarkable.</em></h2>
-    
-    <div class="rb">
-      <div>
-        <h3 style="font-family:var(--sf);font-size:1.1rem;font-weight:700;margin-bottom:.2rem">Curriculum Vitae</h3>
-        <p style="font-size:.85rem;color:var(--t2);font-weight:300">Download or view my full resume.</p>
-      </div>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-        <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\sreeved_resume.pdf" target="_blank" class="btn bg-">View Resume</a>
-        <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\sreeved_resume.pdf" download="Sreeved_Resume.pdf" class="btn bo-" style="font-size:.82rem">Download PDF</a>
-      </div>
-    </div>
+                @keyframes typing {
+                    from {
+                        width: 0
+                    }
 
-    <p class="bt" style="margin-bottom:2rem">Open to internships, research collaborations, or a great conversation about AI, robotics, or engineering.</p>
-    
-    <div class="cgg">
-      <div class="fw">
-        <form action="mailto:sreeved4@gmail.com" method="get" enctype="text/plain">
-          <div class="fr">
-            <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your Name"/></div>
-            <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com"/></div>
-          </div>
-          <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="Internship / Collaboration"/></div>
-          <div class="fg"><label>Message</label><textarea rows="4" name="body" placeholder="Tell me about your opportunity..."></textarea></div>
-          <button type="submit" class="btn bg-" style="width:100%;justify-content:center;border-radius:6px;padding:.85rem">Send Message</button>
-        </form>
-      </div>
+                    to {
+                        width: 100%
+                    }
+                }
 
-      <div>
-<div class="sr-">
-  <div class="si-c">
-    <div class="sic">📧</div>
-    <div>
-      <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Email</p>
-      <a href="mailto:sreeved4@gmail.com" class="sl" style="display:block">sreeved4@gmail.com</a>
-    </div>
-  </div>
+                /* Layout Adjustments */
+                .ag {
+                    display: flex;
+                    align-items: center;
+                    gap: 3rem;
+                    max-width: 1100px;
+                    margin: 0 auto;
+                    flex-wrap: wrap;
+                }
 
-  <div class="si-c" style="margin-top:1rem">
-    <div class="sic">📱</div>
-    <div>
-      <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Phone</p>
-      <a href="tel:+918281050223" class="sl" style="display:block">+91 8281050223</a>
-    </div>
-  </div>
-          </a>
+                /* Photo Container */
+                .photo-space {
+                    position: relative;
+                    width: 250px;
+                    height: 320px;
+                    background: #222;
+                    /* Placeholder color */
+                    border-radius: 20px;
+                    overflow: hidden;
+                    animation: float 4s ease-in-out infinite;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                }
 
-          <div class="si-c" style="margin-top: 1rem;">
-            <div class="sic">📍</div>
-            <div><p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Location</p><p style="font-family:var(--mn);font-size:.78rem">Mayyil, Kannur, Kerala</p></div>
-          </div>
-          
-          <div class="si-c" style="margin-top: 1rem;">
-            <div class="sic">🐙</div>
-            <div><p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">GitHub</p><a href="https://github.com/sreeved-prasad" target="_blank" rel="noopener" class="sl" style="display:block">github.com/sreeved-prasad</a></div>
-          </div>
-          
-          <div class="si-c" style="margin-top: 1rem;">
-            <div class="sic">💼</div>
-            <div><p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">LinkedIn</p><a href="https://linkedin.com/in/sreeved-prasad" target="_blank" rel="noopener" class="sl" style="display:block">linkedin.com/in/sreeved-prasad</a></div>
-          </div>
-        </div>
+                .photo-space img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
 
-        <div style="margin-top:1.5rem;padding:1.1rem 1.25rem;background:var(--s);border:1px solid var(--b);border-radius:12px">
-          <p style="font-family:var(--mn);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:.5rem">Status</p>
-          <div style="display:flex;align-items:center;gap:.6rem"><span style="width:8px;height:8px;border-radius:50%;background:#4ade80;animation:glG 2s ease-in-out infinite;display:inline-block;flex-shrink:0"></span><span style="font-size:.9rem;font-weight:300">Open for conversations</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                /* Staggered Tag Animation */
+                .tg {
+                    opacity: 0;
+                    animation: fadeInUp 0.5s ease forwards;
+                }
 
-<footer>
-  <div class="fl">Sreeved <span>Prasad</span></div>
-  <div class="fn">
-    <label for="s0">Home</label><label for="s1">About</label><label for="s2">Projects</label>
-    <label for="s3">Skills</label><label for="s4">Certs</label><label for="s5">Education</label><label for="s6">Contact</label>
-  </div>
-  <span class="fc">Sreeved Prasad</span>
-</footer>
+                .tg:nth-child(1) {
+                    animation-delay: 0.2s;
+                }
+
+                .tg:nth-child(2) {
+                    animation-delay: 0.3s;
+                }
+
+                .tg:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+
+                .tg:nth-child(4) {
+                    animation-delay: 0.5s;
+                }
+
+                /* Typing effect for the "intelligent systems" emphasis */
+                .st em {
+                    display: inline-block;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    border-right: 3px solid;
+                    width: 0;
+                    animation: typing 1.5s steps(20) forwards 0.8s;
+                }
+            </style>
+
+            <div class="slide" id="slide-1">
+                <div class="si" style="justify-content:center">
+                    <div class="ag">
+
+                        <div class="photo-space">
+                            <img src="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\Gemini_Generated_Image_qd9elpqd9elpqd9e.png"
+                                alt="Sreeved">
+                        </div>
+
+                        <div style="position:relative">
+                            <div class="af">
+                                <span class="mn-">SP</span>
+                                <div class="dp">
+                                    <div class="dpair">
+                                        <div class="dd g" style="animation-delay:0s"></div>
+                                        <div class="dd t" style="animation-delay:.5s"></div>
+                                    </div>
+                                    <div class="dpair">
+                                        <div class="dd t" style="animation-delay:.25s"></div>
+                                        <div class="dd g" style="animation-delay:.75s"></div>
+                                    </div>
+                                    <div class="dpair">
+                                        <div class="dd g" style="animation-delay:.5s"></div>
+                                        <div class="dd t" style="animation-delay:1s"></div>
+                                    </div>
+                                    <div class="dpair">
+                                        <div class="dd t" style="animation-delay:.75s"></div>
+                                        <div class="dd g" style="animation-delay:1.25s"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ab ab1"><span class="bn">7.4</span><span class="bl">CGPA / 10</span></div>
+                            <div class="ab ab2"><span class="bn">97%</span><span class="bl">SSC Score</span></div>
+                        </div>
+
+                        <div style="flex: 1; min-width: 300px;">
+                            <p class="ey">About Me</p>
+                            <h2 class="st">Turning data into<br><em>intelligent systems.</em></h2>
+                            <div class="dv"></div>
+                            <p class="bt">Hi — I'm Sreeved, a B.Tech student in AI &amp; Data Science at Amrita Vishwa
+                                Vidyapeetham. I bridge artificial intelligence and real-world engineering challenges.
+                            </p>
+
+                            <div style="display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem">
+                                <span class="tg">Deep Learning</span>
+                                <span class="tg">Computer Vision</span>
+                                <span class="tg">Robotics</span>
+                                <span class="tg">Structural FEA</span>
+                            </div>
+
+                            <div style="display:flex;gap:.9rem;flex-wrap:wrap">
+                                <label for="s2" class="btn bg-">View Projects</label>
+                                <label for="s6" class="btn bo-">Contact Me</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- PROJECTS -->
+            <style>
+                /* 1. Global Project Card Animations */
+                .pjc {
+                    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+                    cursor: pointer;
+                    position: relative;
+                    border-radius: 12px;
+                    /* Smooth corners */
+                }
+
+                /* Floating Effect for all cards */
+                @keyframes float {
+                    0% {
+                        transform: translateY(0px);
+                    }
+
+                    50% {
+                        transform: translateY(-8px);
+                    }
+
+                    100% {
+                        transform: translateY(0px);
+                    }
+                }
+
+                .pjc {
+                    animation: float 6s ease-in-out infinite;
+                }
+
+                .pjc:nth-child(2) {
+                    animation-delay: 1s;
+                }
+
+                .pjc:nth-child(3) {
+                    animation-delay: 2s;
+                }
+
+                /* Hover Lift & Glow */
+                .pjc:hover {
+                    transform: translateY(-15px) scale(1.02) !important;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(74, 184, 193, 0.1);
+                    z-index: 10;
+                    animation-play-state: paused;
+                    /* Stop floating when interacting */
+                }
+
+                /* 2. Scanning Light Effect on the Preview (pv) */
+                .pv::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 50%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+                    transition: 0.5s;
+                }
+
+                .pjc:hover .pv::after {
+                    left: 150%;
+                    transition: 0.8s;
+                }
+
+                /* 3. Technology Tag "Pop" */
+                .pg {
+                    transition: all 0.3s ease;
+                }
+
+                .pjc:hover .pg {
+                    transform: scale(1.1);
+                    border-color: currentColor;
+                }
+
+                /* 4. Neural Network Pulse (Project 3) */
+                @keyframes pulseNode {
+                    0% {
+                        r: 5;
+                        opacity: 0.5;
+                    }
+
+                    50% {
+                        r: 8;
+                        opacity: 1;
+                    }
+
+                    100% {
+                        r: 5;
+                        opacity: 0.5;
+                    }
+                }
+
+                .pjc:hover circle {
+                    animation: pulseNode 1.5s infinite ease-in-out !important;
+                }
+
+                /* 5. SVG Line "Signal" Animation */
+                @keyframes lineFlow {
+                    0% {
+                        stroke-dashoffset: 100;
+                        opacity: 0.2;
+                    }
+
+                    50% {
+                        opacity: 0.6;
+                    }
+
+                    100% {
+                        stroke-dashoffset: 0;
+                        opacity: 0.2;
+                    }
+                }
+
+                .pjc:hover line {
+                    stroke-dasharray: 10;
+                    animation: lineFlow 2s linear infinite !important;
+                }
+            </style>
+
+            <div class="slide" id="slide-2">
+                <div class="si">
+                    <p class="ey">Selected Work</p>
+                    <h2 class="st">Projects that <em>define me.</em></h2>
+                    <div class="pjg">
+
+                        <article class="pjc ft">
+                            <div class="pv"
+                                style="background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(74,184,193,.04))">
+                                <div class="ga"></div>
+                                <div class="ab-"></div>
+                                <div class="as1"></div>
+                                <div class="as2"></div>
+                                <div class="at"></div>
+                                <div class="ao"></div>
+                                <p
+                                    style="position:absolute;bottom:.75rem;left:.75rem;font-family:var(--mn);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g);opacity:.6">
+                                    CoppeliaSim Simulation</p>
+                                <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank"
+                                        rel="noopener" class="ol">GitHub</a><a href="#" class="ol">Case Study</a></div>
+                            </div>
+                            <div class="pb">
+                                <span class="pt">Robotics · Computer Vision · Aug–Dec 2025</span>
+                                <h3 class="pn">Vision-Guided Robotic Arm</h3>
+                                <p class="pd-">Autonomous robotic arm in CoppeliaSim for real-time shape &amp; colour
+                                    classification with automated object sorting.</p>
+                                <div class="ptech"><span class="pg pg-g">CoppeliaSim</span><span
+                                        class="pg pg-g">Python</span><span class="pg pg-g">OpenCV</span><span
+                                        class="pg pg-t">Isaac Sim</span></div>
+                            </div>
+                        </article>
+
+                        <article class="pjc">
+                            <div class="pv"
+                                style="background:linear-gradient(135deg,rgba(74,184,193,.05),rgba(201,168,76,.03));display:flex;align-items:center;justify-content:center">
+                                <div class="ga"></div>
+                                <div style="position:relative;width:80px;height:130px">
+                                    <div
+                                        style="position:absolute;width:60px;height:110px;border:1px solid rgba(74,184,193,.4);border-radius:4px;top:10px;left:10px">
+                                    </div>
+                                    <div class="cr cr1"></div>
+                                    <div class="cr cr2"></div>
+                                    <div class="cr cr3"></div>
+                                </div>
+                                <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank"
+                                        rel="noopener" class="ol">GitHub</a></div>
+                            </div>
+                            <div class="pb">
+                                <span class="pt">Structural Engineering · FEA · Feb–Jun 2025</span>
+                                <h3 class="pn">ANSYS Buckling Analysis</h3>
+                                <p class="pd-">FEA-based buckling analysis of thin-walled cylinders assessing stiffening
+                                    ring impact on critical load capacity.</p>
+                                <div class="ptech"><span class="pg pg-t">ANSYS</span><span
+                                        class="pg pg-t">MATLAB</span><span class="pg pg-g">FEA</span></div>
+                            </div>
+                        </article>
+
+                        <article class="pjc">
+                            <div class="pv"
+                                style="background:linear-gradient(135deg,rgba(201,168,76,.04),rgba(74,184,193,.06));display:flex;align-items:center;justify-content:center">
+                                <div class="ga"></div>
+                                <svg width="180" height="110" viewBox="0 0 180 110" style="position:relative;z-index:1">
+                                    <g opacity=".15" stroke="white" stroke-width="1">
+                                        <line x1="20" y1="22" x2="70" y2="14" />
+                                        <line x1="20" y1="22" x2="70" y2="38" />
+                                        <line x1="20" y1="55" x2="70" y2="38" />
+                                        <line x1="20" y1="55" x2="70" y2="62" />
+                                        <line x1="20" y1="88" x2="70" y2="62" />
+                                        <line x1="75" y1="14" x2="120" y2="22" />
+                                        <line x1="75" y1="38" x2="120" y2="55" />
+                                        <line x1="75" y1="62" x2="120" y2="55" />
+                                        <line x1="75" y1="86" x2="120" y2="88" />
+                                        <line x1="125" y1="22" x2="165" y2="38" />
+                                        <line x1="125" y1="55" x2="165" y2="38" />
+                                        <line x1="125" y1="88" x2="165" y2="72" />
+                                    </g>
+                                    <circle cx="20" cy="22" r="6" fill="#c9a84c"
+                                        style="animation:dP 2s 0s ease-in-out infinite" />
+                                    <circle cx="20" cy="55" r="6" fill="#c9a84c"
+                                        style="animation:dP 2s .3s ease-in-out infinite" />
+                                    <circle cx="20" cy="88" r="6" fill="#c9a84c"
+                                        style="animation:dP 2s .6s ease-in-out infinite" />
+                                    <circle cx="75" cy="14" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .15s ease-in-out infinite" />
+                                    <circle cx="75" cy="38" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .45s ease-in-out infinite" />
+                                    <circle cx="75" cy="62" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .75s ease-in-out infinite" />
+                                    <circle cx="75" cy="86" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s 1.05s ease-in-out infinite" />
+                                    <circle cx="125" cy="22" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .3s ease-in-out infinite" />
+                                    <circle cx="125" cy="55" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .6s ease-in-out infinite" />
+                                    <circle cx="125" cy="88" r="5" fill="#4ab8c1"
+                                        style="animation:dP 2s .9s ease-in-out infinite" />
+                                    <circle cx="165" cy="38" r="6" fill="#c9a84c"
+                                        style="animation:dP 2s .4s ease-in-out infinite" />
+                                    <circle cx="165" cy="72" r="6" fill="#c9a84c"
+                                        style="animation:dP 2s .8s ease-in-out infinite" />
+                                </svg>
+                                <div class="ov"><a href="https://github.com/sreeved-prasad" target="_blank"
+                                        rel="noopener" class="ol">GitHub</a></div>
+                            </div>
+                            <div class="pb">
+                                <span class="pt">Machine Learning · Deep Learning · 2026</span>
+                                <h3 class="pn">Deep Learning Pipeline</h3>
+                                <p class="pd-">End-to-end neural networks for classification &amp; regression. DataCamp
+                                    certified — Developing LLMs.</p>
+                                <div class="ptech"><span class="pg pg-g">PyTorch</span><span
+                                        class="pg pg-g">Keras</span><span class="pg pg-t">NumPy</span></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <!-- SKILLS -->
+            <div class="slide" id="slide-3">
+                <div class="si">
+                    <p class="ey">Expertise</p>
+                    <h2 class="st">Skills &amp; <em>Technologies.</em></h2>
+
+                    <div class="skg">
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">Programming</h3>
+                            <p class="ss-">Core Languages</p>
+                            <ul class="skl">
+                                <li>Python — Data, ML, Automation</li>
+                                <li>SQL — Database Queries</li>
+                                <li>Java — OOP Design</li>
+                                <li>R — Statistical Analysis</li>
+                            </ul>
+                        </div>
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">Engineering Tools</h3>
+                            <p class="ss-">Simulation &amp; Analysis</p>
+                            <ul class="skl">
+                                <li>ANSYS — Structural FEA</li>
+                                <li>MATLAB — Numerical Methods</li>
+                                <li>CoppeliaSim — Robotics</li>
+                                <li>NVIDIA Isaac Sim</li>
+                            </ul>
+                        </div>
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">AI / ML</h3>
+                            <p class="ss-">Frameworks &amp; Concepts</p>
+                            <ul class="skl">
+                                <li>Deep Learning — PyTorch, Keras</li>
+                                <li>Computer Vision — OpenCV</li>
+                                <li>Data Analysis — NumPy, Pandas</li>
+                                <li>Neural Network Architecture</li>
+                            </ul>
+                        </div>
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">Mechanical</h3>
+                            <p class="ss-">Engineering Fundamentals</p>
+                            <ul class="skl">
+                                <li>Structural Stability Analysis</li>
+                                <li>Buckling &amp; Load Analysis</li>
+                                <li>Kinematics &amp; Dynamics</li>
+                                <li>Material Mechanics</li>
+                            </ul>
+                        </div>
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">Soft Skills</h3>
+                            <p class="ss-">Professional Qualities</p>
+                            <ul class="skl">
+                                <li>Active Listening</li>
+                                <li>Adaptability</li>
+                                <li>Team Collaboration</li>
+                                <li>Communication</li>
+                            </ul>
+                        </div>
+
+                        <div class="skg-">
+                            <span class="si- icon-box"></span>
+                            <h3 class="st-">Dev Tools</h3>
+                            <p class="ss-">Workflow</p>
+                            <ul class="skl">
+                                <li>Git &amp; GitHub</li>
+                                <li>Jupyter Notebooks</li>
+                                <li>Linux Terminal</li>
+                                <li>VS Code</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERTS -->
+            <div class="slide" id="slide-4">
+                <div class="si">
+                    <p class="ey">Achievements</p>
+                    <h2 class="st">Certifications &amp; <em>Recognition.</em></h2>
+
+                    <div class="cg">
+
+                        <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\certificate (3).pdf"
+                            target="_blank" class="cc ct" style="text-decoration:none">
+                            <span class="pulse g"></span>
+                            <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">
+                                Developing Large Language Models</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">
+                                DataCamp · #811,799</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Mar 2026
+                            </p>
+                            <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View
+                                Certificate</p>
+                        </a>
+
+                        <a href="C:\Users\HP\Pictures\Screenshots\Screenshot 2026-03-23 173746.png" target="_blank"
+                            class="cc ct" style="text-decoration:none">
+                            <span class="pulse t"></span>
+                            <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">SqlDBM
+                                Fundamentals</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">
+                                SqlDBM · ID: 0g7ugvqos3</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Mar 2026
+                            </p>
+                            <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View
+                                Certificate</p>
+                        </a>
+
+                        <a target="_blank" class="cc ct" style="text-decoration:none">
+                            <span class="pulse g2"></span>
+                            <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">NVIDIA
+                                Isaac Sim</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">
+                                NVIDIA Deep Learning Inst.</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Jun 2025
+                            </p>
+                            <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View
+                                Certificate</p>
+                        </a>
+
+                        <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\Screenshot 2026-03-22 at 9.34.59 PM.png"
+                            target="_blank" class="cc ct" style="text-decoration:none">
+                            <span class="pulse t"></span>
+                            <p style="font-family:var(--sf);font-size:1rem;font-weight:700;margin-bottom:.3rem">
+                                Communication Skills</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase">
+                                TCS iON</p>
+                            <p style="font-family:var(--mn);font-size:.62rem;color:var(--g);margin-top:.5rem">Nov 2025
+                            </p>
+                            <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.5rem">View
+                                Certificate</p>
+                        </a>
+
+                    </div>
+
+                    <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\infra.jpg" target="_blank"
+                        class="lb"
+                        style="text-decoration:none; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <p
+                                style="font-family:var(--mn);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g);margin-bottom:.3rem">
+                                Leadership · Certificate of Appreciation</p>
+                            <p style="font-family:var(--sf);font-size:1.05rem;font-weight:700;margin-bottom:.2rem">
+                                Vidyut Multifest 2025 — Infrastructure Management</p>
+                            <p style="font-size:.85rem;color:var(--t2);font-weight:300">National-level Tech Fest ·
+                                Amrita Vishwa Vidyapeetham, Amritapuri</p>
+                            <p style="font-family:var(--mn);font-size:.58rem;color:var(--tl);margin-top:.4rem">Click to
+                                view certificate</p>
+                        </div>
+                        <span class="bn-">National Level</span>
+                    </a>
+
+                    <div class="er">
+                        <div class="ac">
+                            <span class="mini-dot g"></span>
+                            <div>
+                                <p style="font-weight:600;font-size:.875rem;margin-bottom:.15rem">State-level Athlete
+                                </p>
+                                <p style="font-size:.78rem;color:var(--t2);font-weight:300">200 m Sprint — Kerala State
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ac">
+                            <span class="mini-dot t"></span>
+                            <div>
+                                <p style="font-weight:600;font-size:.875rem;margin-bottom:.15rem">NSS Volunteer</p>
+                                <p style="font-size:.78rem;color:var(--t2);font-weight:300">National Service Scheme ·
+                                    Unit No. 10</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- EDUCATION -->
+            <div class="slide" id="slide-5">
+                <div class="si">
+                    <p class="ey">Academic Journey</p>
+                    <h2 class="st">Education &amp; <em>Background.</em></h2>
+                    <div class="eg">
+                        <div>
+                            <div class="tl">
+                                <div class="ti">
+                                    <p class="ty">2024 – Present</p>
+                                    <p class="tt">B.Tech in AI &amp; Data Science</p>
+                                    <p class="to">Amrita Vishwa Vidyapeetham, Amritapuri</p><span class="pg pg-g"
+                                        style="margin-top:.6rem;display:inline-block">CGPA 7.4 / 10</span>
+                                </div>
+                                <div class="ti">
+                                    <p class="ty">2022 – 2023</p>
+                                    <p class="tt">HSC — Class XII</p>
+                                    <p class="to">IMNSGHSS Mayyil, Kannur, Kerala</p><span class="pg pg-g"
+                                        style="margin-top:.6rem;display:inline-block">93%</span>
+                                </div>
+                                <div class="ti">
+                                    <p class="ty">2021 – 2022</p>
+                                    <p class="tt">SSC — Class X</p>
+                                    <p class="to">IMNSGHSS Mayyil, Kannur, Kerala</p><span class="pg pg-g"
+                                        style="margin-top:.6rem;display:inline-block">97%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card" style="margin-bottom:1.25rem">
+                                <p
+                                    style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase;margin-bottom:.5rem">
+                                    Location</p>
+                                <p style="font-weight:600;margin-bottom:.2rem">Nilaav, Mayyil</p>
+                                <p style="color:var(--t2);font-size:.875rem;font-weight:300">Kannur, Kerala, India</p>
+                            </div>
+                            <div class="card" style="margin-bottom:1.25rem">
+                                <p
+                                    style="font-family:var(--mn);font-size:.62rem;color:var(--t3);text-transform:uppercase;margin-bottom:.5rem">
+                                    Contact</p>
+                                <a href="mailto:sreeved4@gmail.com" class="clink"
+                                    style="display:block;margin-bottom:.3rem">sreeved4@gmail.com</a>
+                                <a href="tel:+918281050223" class="clink">+91 8281050223</a>
+                            </div>
+                            <div class="str">
+                                <div class="tc">
+                                    <p
+                                        style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">
+                                        7.4</p>
+                                    <p
+                                        style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">
+                                        CGPA</p>
+                                </div>
+                                <div class="tc">
+                                    <p
+                                        style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">
+                                        3</p>
+                                    <p
+                                        style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">
+                                        Certs</p>
+                                </div>
+                                <div class="tc">
+                                    <p
+                                        style="font-family:var(--sf);font-size:1.75rem;font-weight:900;color:var(--g);line-height:1">
+                                        2</p>
+                                    <p
+                                        style="font-family:var(--mn);font-size:.58rem;color:var(--t3);text-transform:uppercase;margin-top:.3rem">
+                                        Projects</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="slide" id="slide-6">
+                <div class="si">
+                    <p class="ey">Get In Touch</p>
+                    <h2 class="st">Let's build something <em>remarkable.</em></h2>
+
+                    <div class="rb">
+                        <div>
+                            <h3 style="font-family:var(--sf);font-size:1.1rem;font-weight:700;margin-bottom:.2rem">
+                                Curriculum Vitae</h3>
+                            <p style="font-size:.85rem;color:var(--t2);font-weight:300">Download or view my full resume.
+                            </p>
+                        </div>
+                        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+                            <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\sreeved_resume.pdf"
+                                target="_blank" class="btn bg-">View Resume</a>
+                            <a href="C:\Users\HP\Desktop\Downloads\nand2tetris\nand2tetris\projects\2\sreeved_resume.pdf"
+                                download="Sreeved_Resume.pdf" class="btn bo-" style="font-size:.82rem">Download PDF</a>
+                        </div>
+                    </div>
+
+                    <p class="bt" style="margin-bottom:2rem">Open to internships, research collaborations, or a great
+                        conversation about AI, robotics, or engineering.</p>
+
+                    <div class="cgg">
+                        <div class="fw">
+                            <form action="mailto:sreeved4@gmail.com" method="get" enctype="text/plain">
+                                <div class="fr">
+                                    <div class="fg"><label>Name</label><input type="text" name="name"
+                                            placeholder="Your Name" /></div>
+                                    <div class="fg"><label>Email</label><input type="email" name="email"
+                                            placeholder="your@email.com" /></div>
+                                </div>
+                                <div class="fg"><label>Subject</label><input type="text" name="subject"
+                                        placeholder="Internship / Collaboration" /></div>
+                                <div class="fg"><label>Message</label><textarea rows="4" name="body"
+                                        placeholder="Tell me about your opportunity..."></textarea></div>
+                                <button type="submit" class="btn bg-"
+                                    style="width:100%;justify-content:center;border-radius:6px;padding:.85rem">Send
+                                    Message</button>
+                            </form>
+                        </div>
+
+                        <div>
+                            <div class="sr-">
+                                <div class="si-c">
+                                    <div class="sic">📧</div>
+                                    <div>
+                                        <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Email</p>
+                                        <a href="mailto:sreeved4@gmail.com" class="sl"
+                                            style="display:block">sreeved4@gmail.com</a>
+                                    </div>
+                                </div>
+
+                                <div class="si-c" style="margin-top:1rem">
+                                    <div class="sic">📱</div>
+                                    <div>
+                                        <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Phone</p>
+                                        <a href="tel:+918281050223" class="sl" style="display:block">+91 8281050223</a>
+                                    </div>
+                                </div>
+                                </a>
+
+                                <div class="si-c" style="margin-top: 1rem;">
+                                    <div class="sic">📍</div>
+                                    <div>
+                                        <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">Location</p>
+                                        <p style="font-family:var(--mn);font-size:.78rem">Mayyil, Kannur, Kerala</p>
+                                    </div>
+                                </div>
+
+                                <div class="si-c" style="margin-top: 1rem;">
+                                    <div class="sic">🐙</div>
+                                    <div>
+                                        <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">GitHub</p><a
+                                            href="https://github.com/sreeved-prasad" target="_blank" rel="noopener"
+                                            class="sl" style="display:block">github.com/sreeved-prasad</a>
+                                    </div>
+                                </div>
+
+                                <div class="si-c" style="margin-top: 1rem;">
+                                    <div class="sic">💼</div>
+                                    <div>
+                                        <p style="font-size:.75rem;color:var(--t3);margin-bottom:.1rem">LinkedIn</p><a
+                                            href="https://linkedin.com/in/sreeved-prasad" target="_blank" rel="noopener"
+                                            class="sl" style="display:block">linkedin.com/in/sreeved-prasad</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                style="margin-top:1.5rem;padding:1.1rem 1.25rem;background:var(--s);border:1px solid var(--b);border-radius:12px">
+                                <p
+                                    style="font-family:var(--mn);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:.5rem">
+                                    Status</p>
+                                <div style="display:flex;align-items:center;gap:.6rem"><span
+                                        style="width:8px;height:8px;border-radius:50%;background:#4ade80;animation:glG 2s ease-in-out infinite;display:inline-block;flex-shrink:0"></span><span
+                                        style="font-size:.9rem;font-weight:300">Open for conversations</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="fl">Sreeved <span>Prasad</span></div>
+                <div class="fn">
+                    <label for="s0">Home</label><label for="s1">About</label><label for="s2">Projects</label>
+                    <label for="s3">Skills</label><label for="s4">Certs</label><label for="s5">Education</label><label
+                        for="s6">Contact</label>
+                </div>
+                <span class="fc">Sreeved Prasad</span>
+            </footer>
 </body>
+
 </html>
